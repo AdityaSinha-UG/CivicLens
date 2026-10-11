@@ -85,6 +85,14 @@ export const App: React.FC = () => {
     setSelectedCategory('All');
   };
 
+  const handleSignOut = () => {
+    storageService.resetProfile();
+    const defaults = storageService.getProfile();
+    setProfile(defaults);
+    setIsOnboardingOpen(true);
+    setCurrentTab('main');
+  };
+
   const handleCompleteOnboarding = (partial: Partial<UserProfile>) => {
     const updated = { ...profile, ...partial, hasCompletedOnboarding: true };
     setProfile(updated);
@@ -157,6 +165,8 @@ export const App: React.FC = () => {
               profile={profile}
               onSaveProfile={handleSaveProfile}
               onResetProfile={handleResetProfile}
+              onSignOut={handleSignOut}
+              onOpenLocalityModal={() => setIsLocalityModalOpen(true)}
             />
           )}
         </main>

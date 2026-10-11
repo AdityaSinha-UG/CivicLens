@@ -6,7 +6,8 @@ import {
   Maximize2,
   ArrowLeft,
   Tag,
-  Info
+  Info,
+  MousePointer
 } from 'lucide-react';
 import { CivicFlashcard, FlashcardViewMode } from '../../types/flashcard';
 import { CivicCategory } from '../../types/news';
@@ -62,8 +63,8 @@ export const FlashcardViewer: React.FC<FlashcardViewerProps> = ({
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (viewMode !== 'carousel') return;
-      if (e.key === 'ArrowRight') handleNext();
-      if (e.key === 'ArrowLeft') handlePrev();
+      if (e.key === 'ArrowRight' || e.key === 'ArrowDown') handleNext();
+      if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') handlePrev();
     };
 
     window.addEventListener('keydown', handleKeyDown);
@@ -96,35 +97,63 @@ export const FlashcardViewer: React.FC<FlashcardViewerProps> = ({
     touchStartCoords.current = null;
   };
 
-  // Controlled Mouse-Wheel and Trackpad navigation with debounce lockout
-  const wheelLockRef = useRef<boolean>(false);
-  const wheelTimeoutRef = useRef<number | null>(null);
+  // Dedicated Native Wheel & Trackpad Navigation (Non-passive with e.preventDefault)
+  // Prevents the window from scrolling up/down while navigating flashcards
+  const deckContainerRef = useRef<HTMLDivElement>(null);
+  const currentIndexRef = useRef(currentIndex);
+  const filteredCardsRef = useRef(filteredCards);
+  const wheelLockRef = useRef(false);
 
-  const handleWheel = (e: React.WheelEvent) => {
+  useEffect(() => {
+    currentIndexRef.current = currentIndex;
+  }, [currentIndex]);
+
+  useEffect(() => {
+    filteredCardsRef.current = filteredCards;
+  }, [filteredCards]);
+
+  useEffect(() => {
     if (viewMode !== 'carousel') return;
-    if (wheelLockRef.current) return;
+    const container = deckContainerRef.current;
+    if (!container) return;
 
-    // Check vertical or horizontal trackpad delta
-    const delta = Math.abs(e.deltaY) > Math.abs(e.deltaX) ? e.deltaY : e.deltaX;
+    const onWheel = (e: WheelEvent) => {
+      // Prevent browser default window scrolling so page does not jump up or down
+      e.preventDefault();
 
-    if (Math.abs(delta) > 30) {
-      if (delta > 0 && currentIndex < filteredCards.length - 1) {
-        wheelLockRef.current = true;
-        handleNext();
-      } else if (delta < 0 && currentIndex > 0) {
-        wheelLockRef.current = true;
-        handlePrev();
+      if (wheelLockRef.current) return;
+
+      const delta = Math.abs(e.deltaY) > Math.abs(e.deltaX) ? e.deltaY : e.deltaX;
+
+      if (Math.abs(delta) > 15) {
+        if (delta > 0) {
+          // Scrolling DOWN -> advance to next card
+          if (currentIndexRef.current < filteredCardsRef.current.length - 1) {
+            wheelLockRef.current = true;
+            setCurrentIndex((prev) => prev + 1);
+          }
+        } else {
+          // Scrolling UP -> go back to previous card
+          if (currentIndexRef.current > 0) {
+            wheelLockRef.current = true;
+            setCurrentIndex((prev) => prev - 1);
+          }
+        }
+
+        // Controlled 300ms cooldown to ensure one deliberate scroll flips exactly one card
+        if (wheelLockRef.current) {
+          window.setTimeout(() => {
+            wheelLockRef.current = false;
+          }, 300);
+        }
       }
+    };
 
-      // Lock out wheel triggers for 450ms to prevent skipping multiple cards
-      if (wheelLockRef.current) {
-        if (wheelTimeoutRef.current) clearTimeout(wheelTimeoutRef.current);
-        wheelTimeoutRef.current = window.setTimeout(() => {
-          wheelLockRef.current = false;
-        }, 450);
-      }
-    }
-  };
+    container.addEventListener('wheel', onWheel, { passive: false });
+    return () => {
+      container.removeEventListener('wheel', onWheel);
+    };
+  }, [viewMode]);
 
   const currentCard = filteredCards[currentIndex];
   const progressPercent = filteredCards.length > 0
@@ -222,11 +251,11 @@ export const FlashcardViewer: React.FC<FlashcardViewerProps> = ({
         </div>
       ) : viewMode === 'carousel' ? (
         <div className="space-y-4">
-          {/* Progress Bar Header */}
+          {/* Progress Bar & Interaction Hint */}
           <div className="max-w-2xl mx-auto flex items-center justify-between text-xs font-mono font-bold text-black px-2">
-            <div className="flex items-center gap-1.5">
-              <span className="inline-block w-2.5 h-2.5 rounded-full bg-black animate-pulse" />
-              <span>SWIPE / SCROLL TO BROWSE</span>
+            <div className="flex items-center gap-1.5 bg-black/10 px-2.5 py-1 rounded-full border border-black/20">
+              <MousePointer size={12} className="text-black" />
+              <span className="text-[11px]">SCROLL WHEEL / SWIPE FLIPS CARDS</span>
             </div>
             <div className="bg-black text-white px-2.5 py-0.5 rounded-full text-[11px]">
               <span className="text-[#D4FF00]">{currentIndex + 1}</span> / {filteredCards.length}
@@ -240,12 +269,12 @@ export const FlashcardViewer: React.FC<FlashcardViewerProps> = ({
             />
           </div>
 
-          {/* Interactive Card Container with Wheel and Touch Listeners */}
+          {/* Interactive Card Container with Native Wheel & Touch Listener */}
           <div
-            onWheel={handleWheel}
+            ref={deckContainerRef}
             onTouchStart={handleTouchStart}
             onTouchEnd={handleTouchEnd}
-            className="focus:outline-none"
+            className="focus:outline-none cursor-ns-resize"
             tabIndex={0}
             role="region"
             aria-label="Civic Flashcard Deck"
