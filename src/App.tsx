@@ -106,7 +106,7 @@ export const App: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#FBE5D6] text-[#292923] flex flex-col md:flex-row font-sans selection:bg-[#315B48] selection:text-white">
+    <div className="min-h-screen bg-[#FA541C] text-black flex flex-col md:flex-row font-sans selection:bg-black selection:text-[#D4FF00]">
       {/* Desktop Sidebar Navigation */}
       <Sidebar
         currentTab={currentTab}

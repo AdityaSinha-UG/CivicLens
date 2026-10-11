@@ -1,21 +1,23 @@
 import React from 'react';
-import { Info } from 'lucide-react';
+import { Sparkles } from 'lucide-react';
 
 export const DemoNoticeBanner: React.FC = () => {
   return (
-    <div className="bg-[#FAF2E3] border border-[#D9A441]/40 rounded-xl p-3.5 mb-6 text-xs text-[#615E52] flex items-start gap-3 shadow-xs">
-      <div className="p-1 rounded-md bg-[#D9A441]/20 text-[#8C6415] shrink-0 mt-0.5">
-        <Info size={15} />
+    <div className="bg-white border-2 border-black rounded-3xl p-4 sm:p-5 mb-6 text-xs text-black/80 flex items-start gap-3.5 shadow-[0_6px_0_0_#121212]">
+      <div className="p-2 rounded-2xl bg-[#FFF2E8] border-2 border-black text-[#FA541C] shrink-0 mt-0.5">
+        <Sparkles size={16} />
       </div>
       <div className="flex-1">
-        <p className="font-semibold text-[#292923] flex items-center gap-1.5">
-          <span>Phase 1 UI Prototype • Deterministic Demo Mock Content</span>
-          <span className="inline-flex items-center px-1.5 py-0.2 rounded text-[10px] bg-[#D9A441] text-[#292923] font-bold">
+        <div className="flex items-center gap-2 flex-wrap">
+          <span className="font-['Syne'] font-extrabold text-sm text-black">
+            Phase 1 Prototype • Curated Civic Dispatches
+          </span>
+          <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] bg-[#D4FF00] text-black font-black uppercase border border-black">
             STAGE 1
           </span>
-        </p>
-        <p className="mt-1 leading-relaxed text-[#615E52]">
-          All feed items below are clearly labeled deterministic mock records designed to test responsive layout, editorial cards, category filtering, and flashcards. Live news aggregation via <strong>SerpApi</strong> will be connected in Phase 2. No live incidents or news claims are fabricated.
+        </div>
+        <p className="mt-1 leading-relaxed text-black/75 font-medium">
+          Feed records are deterministic mock records modeled on Pune municipal announcements to test the responsive layout, carousel, and flashcard deck. Real-time SerpApi integration is slated for Phase 2. No live incidents or news claims are fabricated.
         </p>
       </div>
     </div>

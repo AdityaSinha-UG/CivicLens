@@ -1,31 +1,28 @@
 /**
  * CivicLens Design Tokens
- * Centralized palette and typography for the editorial civic theme.
+ * Bold, vibrant, orange-dominant Gen Z editorial palette.
  */
 
 export const DESIGN_TOKENS = {
   colors: {
-    bg: '#FBE5D6',               // Soft peach main background
-    surface: '#FFF9F4',          // Warm light card & content surfaces
-    surfaceHover: '#FCF4ED',
-    surfaceMuted: '#F5EAE0',
-    text: '#292923',             // Primary dark slate text
-    textMuted: '#615E52',        // Secondary readable text
-    textLight: '#827E70',
-    accent: '#315B48',           // Primary forest green accent
-    accentHover: '#244637',
-    accentLight: '#E8F0EC',
-    highlight: '#D9A441',        // Warm mustard / gold secondary highlight
-    highlightHover: '#C59132',
-    highlightLight: '#FAF2E3',
-    border: '#E5D3C2',           // Subtle warm neutral border
-    borderSubtle: '#EFE1D4',
-    borderDark: '#C9B29F',
-    error: '#A7382B',
-    errorLight: '#FCEBE9',
+    bg: '#FA541C',               // Vibrant electric orange canvas
+    bgDeep: '#E03E0B',           // Deep burnt orange
+    bgLight: '#FF7A45',          // Warm energetic orange
+    bgSubtle: '#FFF2E8',         // Light orange tint
+    dark: '#121212',             // Ink black for high contrast
+    darkSurface: '#1E1E1E',      // Charcoal card surface
+    surface: '#FFFFFF',          // Crisp white card surface
+    surfaceWarm: '#FFF8F4',      // Soft warm white surface
+    neon: '#D4FF00',             // Electric lime accent
+    accent: '#FA541C',           // Brand orange accent
+    textDark: '#121212',         // High-contrast dark text
+    textMuted: '#52525B',        // Muted neutral text
+    textLight: '#FFFFFF',        // Pure white for overlays
+    border: '#E4E4E7',           // Clean neutral border
+    borderDark: '#27272A',       // Dark overlay border
   },
   typography: {
-    fontSerif: '"Lora", Georgia, serif',
+    fontDisplay: '"Syne", system-ui, sans-serif',
     fontSans: '"Plus Jakarta Sans", system-ui, -apple-system, sans-serif',
   },
   radii: {
@@ -33,11 +30,12 @@ export const DESIGN_TOKENS = {
     md: '0.5rem',
     lg: '0.75rem',
     xl: '1rem',
+    '2xl': '1.5rem',
     full: '9999px',
   },
   shadows: {
-    subtle: '0 1px 3px 0 rgba(41, 41, 35, 0.05), 0 1px 2px -1px rgba(41, 41, 35, 0.05)',
-    card: '0 2px 6px 0 rgba(41, 41, 35, 0.06), 0 1px 3px 0 rgba(41, 41, 35, 0.04)',
-    hover: '0 6px 16px -2px rgba(41, 41, 35, 0.08), 0 2px 6px -1px rgba(41, 41, 35, 0.04)',
+    punchy: '0 8px 0px 0px #121212',
+    card: '0 4px 20px -2px rgba(18, 18, 18, 0.12)',
+    glow: '0 0 25px rgba(250, 84, 28, 0.4)',
   }
 } as const;

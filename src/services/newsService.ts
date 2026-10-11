@@ -2,7 +2,8 @@ import { NewsArticle, NewsFilterOptions, NewsSearchResult, INewsProvider } from 
 
 /**
  * MockNewsProvider
- * Temporary deterministic provider for UI layout testing.
+ * Deterministic provider for UI layout testing.
+ * Curated with civic imagery representing Pune municipal topics.
  * Strictly labeled as demo content. No fabricated live events or false claims.
  */
 export class MockNewsProvider implements INewsProvider {
@@ -19,7 +20,7 @@ export class MockNewsProvider implements INewsProvider {
       publishedAt: '2026-10-10T08:30:00Z',
       category: 'Traffic/Transport',
       locality: 'Pune',
-      thumbnailUrl: '',
+      thumbnailUrl: 'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=1200&q=80',
       sourceUrl: 'https://www.pmc.gov.in',
       isDemoContent: true,
     },
@@ -35,7 +36,7 @@ export class MockNewsProvider implements INewsProvider {
       publishedAt: '2026-10-09T14:15:00Z',
       category: 'Utilities',
       locality: 'Pune',
-      thumbnailUrl: '',
+      thumbnailUrl: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=1200&q=80',
       sourceUrl: 'https://www.pmc.gov.in',
       isDemoContent: true,
     },
@@ -51,7 +52,7 @@ export class MockNewsProvider implements INewsProvider {
       publishedAt: '2026-10-08T11:00:00Z',
       category: 'Infrastructure/Roads',
       locality: 'Pune',
-      thumbnailUrl: '',
+      thumbnailUrl: 'https://images.unsplash.com/photo-1541888946425-d0fbb186f5f8?auto=format&fit=crop&w=1200&q=80',
       sourceUrl: 'https://punepolice.gov.in',
       isDemoContent: true,
     },
@@ -67,7 +68,7 @@ export class MockNewsProvider implements INewsProvider {
       publishedAt: '2026-10-07T09:45:00Z',
       category: 'Politics/Government',
       locality: 'Pune',
-      thumbnailUrl: '',
+      thumbnailUrl: 'https://images.unsplash.com/photo-1577495508048-b635879837f1?auto=format&fit=crop&w=1200&q=80',
       sourceUrl: 'https://www.pmc.gov.in',
       isDemoContent: true,
     },
@@ -83,7 +84,7 @@ export class MockNewsProvider implements INewsProvider {
       publishedAt: '2026-10-06T16:20:00Z',
       category: 'Disasters/Emergencies',
       locality: 'Pune',
-      thumbnailUrl: '',
+      thumbnailUrl: 'https://images.unsplash.com/photo-1515694346937-94d85e41e6f0?auto=format&fit=crop&w=1200&q=80',
       sourceUrl: 'https://pune.gov.in',
       isDemoContent: true,
     },
@@ -99,7 +100,7 @@ export class MockNewsProvider implements INewsProvider {
       publishedAt: '2026-10-05T19:10:00Z',
       category: 'Public Safety',
       locality: 'Pune',
-      thumbnailUrl: '',
+      thumbnailUrl: 'https://images.unsplash.com/photo-1509114397022-ed747cca3f65?auto=format&fit=crop&w=1200&q=80',
       sourceUrl: 'https://punepolice.gov.in',
       isDemoContent: true,
     },
@@ -115,7 +116,7 @@ export class MockNewsProvider implements INewsProvider {
       publishedAt: '2026-10-04T07:00:00Z',
       category: 'Community/Other',
       locality: 'Pune',
-      thumbnailUrl: '',
+      thumbnailUrl: 'https://images.unsplash.com/photo-1588880331179-bc9b93a8cb5e?auto=format&fit=crop&w=1200&q=80',
       sourceUrl: 'https://pune.gov.in',
       isDemoContent: true,
     }

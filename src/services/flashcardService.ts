@@ -53,6 +53,7 @@ export function generateFlashcardFromArticle(article: NewsArticle): CivicFlashca
     sourceName: article.source.name,
     sourceUrl: article.sourceUrl,
     publishedAt: article.publishedAt,
+    thumbnailUrl: article.thumbnailUrl,
     dateGenerated: new Date().toISOString(),
     isDemoContent: article.isDemoContent,
   };

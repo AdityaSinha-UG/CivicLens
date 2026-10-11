@@ -11,6 +11,7 @@ export interface CivicFlashcard {
   sourceName: string;
   sourceUrl: string;
   publishedAt?: string;
+  thumbnailUrl?: string;
   dateGenerated: string;
   isDemoContent: boolean;
 }

@@ -12,25 +12,26 @@ export const ErrorState: React.FC<ErrorStateProps> = ({
   onRetry,
 }) => {
   return (
-    <div className="bg-[#FFF9F4] border border-[#E8B4AF] rounded-xl p-8 text-center my-6 shadow-xs max-w-xl mx-auto">
-      <div className="w-12 h-12 rounded-full bg-[#FCEBE9] text-[#9A2E22] flex items-center justify-center mx-auto mb-3">
-        <AlertTriangle size={24} />
+    <div className="bg-white border-2 border-black rounded-3xl p-8 text-center my-6 shadow-[0_10px_0_0_#121212] max-w-xl mx-auto">
+      <div className="w-14 h-14 rounded-2xl bg-[#FEE2E2] border-2 border-black text-[#DC2626] flex items-center justify-center mx-auto mb-4 shadow-[0_3px_0_0_#121212]">
+        <AlertTriangle size={26} />
       </div>
 
-      <h3 className="font-serif text-lg font-bold text-[#292923]">
+      <h3 className="font-['Syne'] text-xl font-extrabold text-black">
         Unable to Load Civic Reports
       </h3>
 
-      <p className="text-xs sm:text-sm text-[#615E52] mt-2 leading-relaxed">
+      <p className="text-xs sm:text-sm text-black/75 mt-2 leading-relaxed font-medium">
         {message}
       </p>
 
-      <div className="mt-5 flex justify-center">
+      <div className="mt-6 flex justify-center">
         <Button
           variant="primary"
           size="sm"
           onClick={onRetry}
           icon={<RotateCw size={14} />}
+          className="bg-black text-[#D4FF00] hover:bg-[#DC2626] hover:text-white font-black uppercase text-xs tracking-wider"
         >
           Try Again
         </Button>

@@ -1,5 +1,5 @@
-import React from 'react';
-import { ExternalLink, CheckCircle2, AlertCircle, Building2, MapPin } from 'lucide-react';
+import React, { useState } from 'react';
+import { ExternalLink, Calendar, Building2, MapPin, CheckCircle2, AlertCircle, ImageOff } from 'lucide-react';
 import { CivicFlashcard } from '../../types/flashcard';
 import { Badge } from '../common/Badge';
 
@@ -12,95 +12,135 @@ export const FlashcardCard: React.FC<FlashcardCardProps> = ({
   card,
   isCompact = false,
 }) => {
+  const [imageError, setImageError] = useState(false);
+
+  const formattedDate = card.publishedAt
+    ? new Date(card.publishedAt).toLocaleDateString('en-IN', {
+        month: 'short',
+        day: 'numeric',
+        year: 'numeric',
+      })
+    : null;
+
   return (
-    <div
-      className={`bg-[#FFF9F4] border border-[#E5D3C2] rounded-2xl shadow-card transition-all flex flex-col justify-between ${
-        isCompact ? 'p-5' : 'p-6 sm:p-8 max-w-2xl mx-auto min-h-[380px]'
+    <article
+      className={`relative rounded-3xl overflow-hidden border-2 border-black bg-black shadow-[0_12px_0_0_#121212] select-none transition-all group ${
+        isCompact
+          ? 'h-[420px] flex flex-col justify-end'
+          : 'h-[500px] sm:h-[540px] md:h-[560px] max-w-2xl mx-auto flex flex-col justify-end'
       }`}
+      aria-label={card.headline}
     >
-      <div>
-        {/* Card Header */}
-        <div className="flex flex-wrap items-center justify-between gap-2 pb-3 border-b border-[#E5D3C2]">
-          <div className="flex items-center gap-2">
-            <Badge variant="category" category={card.category}>
+      {/* Immersive Photo Background Filling the Entire Card */}
+      <div className="absolute inset-0 w-full h-full">
+        {card.thumbnailUrl && !imageError ? (
+          <img
+            src={card.thumbnailUrl}
+            alt={card.headline}
+            className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+            onError={() => setImageError(true)}
+          />
+        ) : (
+          <div className="w-full h-full flex flex-col items-center justify-center bg-gradient-to-br from-[#E03E0B] via-[#FA541C] to-[#121212] p-8 text-center">
+            <div className="w-16 h-16 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center text-white mb-2">
+              <ImageOff size={32} />
+            </div>
+            <span className="font-['Syne'] text-lg font-bold text-white tracking-wide uppercase">
               {card.category}
-            </Badge>
-            {card.isDemoContent && (
-              <Badge variant="demo">Demo Card</Badge>
-            )}
+            </span>
           </div>
-          <div className="flex items-center gap-1 text-xs text-[#615E52] font-medium">
-            <MapPin size={13} className="text-[#315B48]" />
-            <span>{card.locality}</span>
-          </div>
+        )}
+
+        {/* Cinematic Gradient Scrim for Guaranteed High Text Contrast */}
+        <div className="absolute inset-0 scrim-gradient-full" />
+      </div>
+
+      {/* Top Floating Badges */}
+      <div className="absolute top-4 sm:top-5 left-4 sm:left-6 right-4 sm:right-6 flex items-center justify-between gap-2 z-10">
+        <div className="flex items-center gap-2 flex-wrap">
+          <Badge variant="category" category={card.category} className="shadow-md">
+            {card.category}
+          </Badge>
+          {card.isDemoContent && (
+            <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-black/60 text-white/80 border border-white/20 backdrop-blur-md">
+              DEMO RECORD
+            </span>
+          )}
         </div>
 
+        <div className="flex items-center gap-1.5 bg-black/60 backdrop-blur-md border border-white/20 px-3 py-1 rounded-full text-xs font-semibold text-white shadow-md">
+          <MapPin size={13} className="text-[#D4FF00]" />
+          <span>{card.locality}</span>
+        </div>
+      </div>
+
+      {/* Overlay Content Stack Layered Directly Over Photograph */}
+      <div className="relative z-10 p-5 sm:p-7 md:p-8 flex flex-col justify-end space-y-3">
         {/* Headline */}
-        <div className="mt-4">
-          <h3
-            className={`font-serif font-bold text-[#292923] leading-snug ${
-              isCompact ? 'text-base sm:text-lg mb-3' : 'text-xl sm:text-2xl mb-4'
-            }`}
-          >
-            {card.headline}
-          </h3>
-        </div>
+        <h3
+          className={`font-['Syne'] font-extrabold text-white leading-tight tracking-tight drop-shadow-sm ${
+            isCompact ? 'text-lg sm:text-xl line-clamp-2' : 'text-xl sm:text-2xl md:text-3xl'
+          }`}
+        >
+          {card.headline}
+        </h3>
 
-        {/* Key Points - Deterministic Extraction */}
-        <div className="space-y-2 mt-3">
-          <h4 className="text-[11px] uppercase tracking-wider font-bold text-[#827E70]">
-            Key Verified Points
-          </h4>
-          <ul className="space-y-2">
-            {card.keyPoints.map((point, index) => (
+        {/* Short factual description / Key Verified Points */}
+        <div className="space-y-1.5">
+          <ul className="space-y-1.5">
+            {card.keyPoints.slice(0, isCompact ? 1 : 2).map((point, index) => (
               <li
                 key={index}
-                className="flex items-start gap-2 text-xs sm:text-sm text-[#292923] leading-relaxed"
+                className="flex items-start gap-2 text-xs sm:text-sm text-white/95 leading-relaxed drop-shadow-xs"
               >
                 <CheckCircle2
-                  size={16}
-                  className="text-[#315B48] shrink-0 mt-0.5"
+                  size={15}
+                  className="text-[#D4FF00] shrink-0 mt-0.5"
                 />
-                <span>{point}</span>
+                <span className="line-clamp-2">{point}</span>
               </li>
             ))}
           </ul>
         </div>
 
-        {/* Civic Impact Section */}
-        <div className="mt-5 p-3 sm:p-3.5 rounded-xl bg-[#F8EFE5] border border-[#E5D3C2] flex items-start gap-2.5">
-          <AlertCircle size={17} className="text-[#8C6415] shrink-0 mt-0.5" />
-          <div>
-            <span className="text-[11px] uppercase font-bold text-[#8C6415] block tracking-wide">
-              Civic Impact Summary
+        {/* Civic Impact Badge / Assessment */}
+        <div className="p-2.5 sm:p-3 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 flex items-start gap-2">
+          <AlertCircle size={15} className="text-[#D4FF00] shrink-0 mt-0.5" />
+          <p className="text-[11px] sm:text-xs text-white/90 leading-snug line-clamp-2">
+            <strong className="text-[#D4FF00] uppercase font-bold text-[10px] block mb-0.5">
+              Civic Impact
+            </strong>
+            {card.impactAssessment}
+          </p>
+        </div>
+
+        {/* Footer Meta: Publisher, Date, and Original Source Link */}
+        <div className="pt-2 border-t border-white/20 flex flex-wrap items-center justify-between gap-2 text-xs">
+          <div className="flex items-center gap-2 text-white/80">
+            <Building2 size={13} className="text-[#D4FF00] shrink-0" />
+            <span className="font-semibold text-white truncate max-w-[150px] sm:max-w-[200px]">
+              {card.sourceName}
             </span>
-            <p className="text-xs sm:text-sm text-[#4A473D] mt-0.5 leading-relaxed font-medium">
-              {card.impactAssessment}
-            </p>
+            {formattedDate && (
+              <span className="text-white/70 text-[11px] hidden sm:flex items-center gap-1">
+                <Calendar size={11} className="inline" />
+                {formattedDate}
+              </span>
+            )}
           </div>
+
+          <a
+            href={card.sourceUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white text-black hover:bg-[#D4FF00] font-bold text-xs transition-colors shadow-md shrink-0 cursor-pointer"
+            aria-label={`Open source notice for ${card.headline}`}
+          >
+            <span>View Source</span>
+            <ExternalLink size={13} />
+          </a>
         </div>
       </div>
-
-      {/* Card Footer: Source attribution & Direct Link */}
-      <div className="mt-6 pt-4 border-t border-[#E5D3C2] flex items-center justify-between text-xs">
-        <div className="flex items-center gap-1.5 text-[#615E52] truncate">
-          <Building2 size={13} className="text-[#315B48] shrink-0" />
-          <span className="truncate max-w-[170px] sm:max-w-[240px]">
-            {card.sourceName}
-          </span>
-        </div>
-
-        <a
-          href={card.sourceUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center gap-1 font-semibold text-[#315B48] hover:text-[#244637] hover:underline transition-colors shrink-0 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#315B48] rounded px-1 py-0.5"
-          aria-label={`Open source notice for ${card.headline}`}
-        >
-          <span>View Source</span>
-          <ExternalLink size={13} />
-        </a>
-      </div>
-    </div>
+    </article>
   );
 };

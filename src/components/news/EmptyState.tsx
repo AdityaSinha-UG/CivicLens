@@ -22,34 +22,36 @@ export const EmptyState: React.FC<EmptyStateProps> = ({
     : 'your active filters';
 
   return (
-    <div className="bg-[#FFF9F4] border border-[#E5D3C2] rounded-xl p-8 text-center my-6 shadow-xs max-w-xl mx-auto">
-      <div className="w-12 h-12 rounded-full bg-[#F5EAE0] text-[#615E52] flex items-center justify-center mx-auto mb-3">
-        <SearchX size={24} />
+    <div className="bg-white border-2 border-black rounded-3xl p-8 text-center my-6 shadow-[0_10px_0_0_#121212] max-w-xl mx-auto">
+      <div className="w-14 h-14 rounded-2xl bg-[#FFF2E8] border-2 border-black text-[#FA541C] flex items-center justify-center mx-auto mb-4 shadow-[0_3px_0_0_#121212]">
+        <SearchX size={26} />
       </div>
 
-      <h3 className="font-serif text-lg font-bold text-[#292923]">
-        No matching reports found in current dataset
+      <h3 className="font-['Syne'] text-xl font-extrabold text-black">
+        No Matching Reports Found
       </h3>
 
-      <p className="text-xs sm:text-sm text-[#615E52] mt-2 leading-relaxed">
-        We found no articles matching {filterDesc} in{' '}
-        <span className="font-semibold text-[#292923]">{locality}</span>.
+      <p className="text-xs sm:text-sm text-black/75 mt-2 leading-relaxed font-medium">
+        No articles found matching {filterDesc} in{' '}
+        <span className="font-extrabold text-black underline">{locality}</span>.
       </p>
 
       {/* Safety & Factuality Disclosure */}
-      <div className="mt-4 p-3 bg-[#FAF2E3] border border-[#D9A441]/30 rounded-lg text-left flex items-start gap-2.5 text-xs text-[#615E52]">
-        <AlertCircle size={16} className="text-[#8C6415] shrink-0 mt-0.5" />
+      <div className="mt-5 p-3.5 bg-[#FFF2E8] border-2 border-black rounded-2xl text-left flex items-start gap-2.5 text-xs text-black/85">
+        <AlertCircle size={16} className="text-[#FA541C] shrink-0 mt-0.5" />
         <p className="leading-snug">
-          <strong>Important notice:</strong> The absence of results in this search does not mean that no civic incidents or emergencies exist in the locality. Please consult local emergency helplines or official municipal portals for urgent situations.
+          <strong className="block text-black uppercase font-bold text-[10px] tracking-wider mb-0.5">Important Civic Notice</strong>
+          The absence of results in this search does not mean that no civic incidents or emergencies exist in the locality. Please consult local emergency helplines or official municipal portals for urgent situations.
         </p>
       </div>
 
-      <div className="mt-5 flex justify-center">
+      <div className="mt-6 flex justify-center">
         <Button
           variant="outline"
           size="sm"
           onClick={onReset}
           icon={<RefreshCw size={14} />}
+          className="bg-black text-[#D4FF00] hover:bg-white hover:text-black font-black uppercase text-xs"
         >
           Reset Filters & Show All
         </Button>

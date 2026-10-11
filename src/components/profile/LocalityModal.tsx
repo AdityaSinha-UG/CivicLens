@@ -47,7 +47,7 @@ export const LocalityModal: React.FC<LocalityModalProps> = ({
     >
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
-          <label className="block text-xs font-bold text-[#292923] mb-1">
+          <label className="block text-xs font-black uppercase tracking-wider text-black mb-1.5">
             Custom Locality / Ward
           </label>
           <div className="flex gap-2">
@@ -56,19 +56,19 @@ export const LocalityModal: React.FC<LocalityModalProps> = ({
               value={customLocality}
               onChange={(e) => setCustomLocality(e.target.value)}
               placeholder="e.g. Pune, Kothrud"
-              className="flex-1 px-3 py-2 rounded-lg border border-[#E5D3C2] bg-white text-sm text-[#292923] focus:outline-none focus:ring-2 focus:ring-[#315B48]"
+              className="flex-1 px-3.5 py-2.5 rounded-2xl border-2 border-black bg-white text-sm font-bold text-black focus:outline-none focus:ring-2 focus:ring-black"
             />
-            <Button type="submit" variant="primary" size="sm">
+            <Button type="submit" variant="primary" size="sm" className="bg-black text-[#D4FF00] font-black uppercase">
               Apply
             </Button>
           </div>
         </div>
 
         <div>
-          <span className="text-[11px] font-bold text-[#615E52] uppercase tracking-wider block mb-2">
+          <span className="text-[10px] font-black text-black/70 uppercase tracking-widest block mb-2">
             Suggested Neighbourhoods
           </span>
-          <div className="grid grid-cols-2 gap-1.5">
+          <div className="grid grid-cols-2 gap-2">
             {COMMON_LOCALITIES.map((loc) => {
               const isSelected = currentLocality.toLowerCase() === loc.toLowerCase();
               return (
@@ -79,10 +79,10 @@ export const LocalityModal: React.FC<LocalityModalProps> = ({
                     onSelectLocality(loc);
                     onClose();
                   }}
-                  className={`text-left px-2.5 py-1.5 rounded-md text-xs font-medium border transition-colors flex items-center justify-between cursor-pointer ${
+                  className={`text-left px-3 py-2 rounded-xl text-xs font-bold border-2 transition-all flex items-center justify-between cursor-pointer ${
                     isSelected
-                      ? 'bg-[#315B48] text-white border-[#315B48]'
-                      : 'bg-[#FFF9F4] text-[#292923] border-[#E5D3C2] hover:bg-[#F6EDE4]'
+                      ? 'bg-black text-[#D4FF00] border-black shadow-[0_2px_0_0_#121212]'
+                      : 'bg-white text-black border-black/20 hover:border-black hover:bg-[#FFF2E8]'
                   }`}
                 >
                   <span className="truncate">{loc}</span>

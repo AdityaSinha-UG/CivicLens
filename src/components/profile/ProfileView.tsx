@@ -44,7 +44,6 @@ export const ProfileView: React.FC<ProfileViewProps> = ({
 
     navigator.geolocation.getCurrentPosition(
       (position) => {
-        // One-time approximate resolution
         const lat = position.coords.latitude.toFixed(2);
         const lon = position.coords.longitude.toFixed(2);
         setLocatingStatus(`One-time location detected (${lat}, ${lon}). Retaining Pune municipal locality for MVP demo.`);
@@ -69,32 +68,34 @@ export const ProfileView: React.FC<ProfileViewProps> = ({
   return (
     <div className="max-w-2xl mx-auto space-y-6">
       {/* Editorial Title Banner */}
-      <div className="pb-4 border-b border-[#E5D3C2]">
-        <h2 className="font-serif text-2xl font-bold text-[#292923]">
-          Profile & Locality Settings
+      <div className="pb-4 border-b-2 border-black/15">
+        <h2 className="font-['Syne'] text-3xl sm:text-4xl font-black text-black">
+          Profile & Locality
         </h2>
-        <p className="text-xs sm:text-sm text-[#615E52] mt-1">
-          Manage your demo citizen profile and default neighbourhood for local civic discovery.
+        <p className="text-xs sm:text-sm text-black/80 font-medium mt-1">
+          Manage your local demo profile and default neighbourhood for local civic discovery.
         </p>
       </div>
 
       {/* Security & Authentication Disclaimer */}
-      <div className="p-4 bg-[#F8EFE5] border border-[#E5D3C2] rounded-xl text-xs text-[#615E52] flex items-start gap-3">
-        <Lock size={17} className="text-[#315B48] shrink-0 mt-0.5" />
+      <div className="p-4 bg-white border-2 border-black rounded-3xl text-xs text-black/80 flex items-start gap-3 shadow-[0_6px_0_0_#121212]">
+        <div className="p-2 rounded-xl bg-black text-[#D4FF00] shrink-0 mt-0.5">
+          <Lock size={16} />
+        </div>
         <div className="leading-relaxed">
-          <strong className="text-[#292923] block mb-0.5">
-            Demo Local Profile (No Cloud Database)
+          <strong className="text-black block mb-0.5 font-bold uppercase text-[11px] tracking-wider">
+            Browser-Local Demo Profile (No Cloud Database)
           </strong>
-          This profile is stored entirely inside your browser's local storage. It does not represent a server-side authenticated account, and phone numbers are not verified via SMS OTP in this MVP.
+          This profile is stored securely inside your browser's local storage. It does not represent a server-side authenticated account, and phone numbers are not verified via SMS OTP in this MVP.
         </div>
       </div>
 
       {/* Main Profile Form */}
-      <form onSubmit={handleSubmit} className="bg-[#FFF9F4] border border-[#E5D3C2] rounded-2xl p-6 sm:p-8 shadow-card space-y-5">
+      <form onSubmit={handleSubmit} className="bg-white border-2 border-black rounded-3xl p-6 sm:p-8 shadow-[0_10px_0_0_#121212] space-y-5">
         {/* Full Name */}
         <div>
-          <label className="block text-xs font-bold uppercase tracking-wider text-[#615E52] mb-1.5 flex items-center gap-1.5">
-            <User size={14} className="text-[#315B48]" />
+          <label className="block text-xs font-black uppercase tracking-wider text-black mb-1.5 flex items-center gap-1.5">
+            <User size={14} className="text-[#FA541C]" />
             <span>Full Name</span>
           </label>
           <input
@@ -103,14 +104,14 @@ export const ProfileView: React.FC<ProfileViewProps> = ({
             onChange={(e) => setFormData({ ...formData, name: e.target.value })}
             placeholder="e.g. Aditya Sharma"
             required
-            className="w-full px-3.5 py-2.5 rounded-lg border border-[#E5D3C2] bg-white text-sm text-[#292923] focus:outline-none focus:ring-2 focus:ring-[#315B48]"
+            className="w-full px-4 py-2.5 rounded-2xl border-2 border-black bg-white text-sm font-bold text-black focus:outline-none focus:ring-2 focus:ring-black"
           />
         </div>
 
         {/* Phone Number */}
         <div>
-          <label className="block text-xs font-bold uppercase tracking-wider text-[#615E52] mb-1.5 flex items-center gap-1.5">
-            <Phone size={14} className="text-[#315B48]" />
+          <label className="block text-xs font-black uppercase tracking-wider text-black mb-1.5 flex items-center gap-1.5">
+            <Phone size={14} className="text-[#FA541C]" />
             <span>Phone Number (Optional for Demo)</span>
           </label>
           <input
@@ -118,9 +119,9 @@ export const ProfileView: React.FC<ProfileViewProps> = ({
             value={formData.phoneNumber}
             onChange={(e) => setFormData({ ...formData, phoneNumber: e.target.value })}
             placeholder="e.g. +91 98765 43210"
-            className="w-full px-3.5 py-2.5 rounded-lg border border-[#E5D3C2] bg-white text-sm text-[#292923] focus:outline-none focus:ring-2 focus:ring-[#315B48]"
+            className="w-full px-4 py-2.5 rounded-2xl border-2 border-black bg-white text-sm font-bold text-black focus:outline-none focus:ring-2 focus:ring-black"
           />
-          <p className="text-[11px] text-[#827E70] mt-1">
+          <p className="text-[11px] text-black/60 font-medium mt-1">
             Demo field only. Unverified. Never shared or sent to external servers.
           </p>
         </div>
@@ -128,8 +129,8 @@ export const ProfileView: React.FC<ProfileViewProps> = ({
         {/* Locality & PIN Code Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
-            <label className="block text-xs font-bold uppercase tracking-wider text-[#615E52] mb-1.5 flex items-center gap-1.5">
-              <MapPin size={14} className="text-[#315B48]" />
+            <label className="block text-xs font-black uppercase tracking-wider text-black mb-1.5 flex items-center gap-1.5">
+              <MapPin size={14} className="text-[#FA541C]" />
               <span>Locality / City</span>
             </label>
             <input
@@ -138,13 +139,13 @@ export const ProfileView: React.FC<ProfileViewProps> = ({
               onChange={(e) => setFormData({ ...formData, locality: e.target.value })}
               placeholder="e.g. Pune"
               required
-              className="w-full px-3.5 py-2.5 rounded-lg border border-[#E5D3C2] bg-white text-sm text-[#292923] focus:outline-none focus:ring-2 focus:ring-[#315B48]"
+              className="w-full px-4 py-2.5 rounded-2xl border-2 border-black bg-white text-sm font-bold text-black focus:outline-none focus:ring-2 focus:ring-black"
             />
           </div>
 
           <div>
-            <label className="block text-xs font-bold uppercase tracking-wider text-[#615E52] mb-1.5 flex items-center gap-1.5">
-              <Compass size={14} className="text-[#315B48]" />
+            <label className="block text-xs font-black uppercase tracking-wider text-black mb-1.5 flex items-center gap-1.5">
+              <Compass size={14} className="text-[#FA541C]" />
               <span>Postal PIN Code</span>
             </label>
             <input
@@ -153,19 +154,19 @@ export const ProfileView: React.FC<ProfileViewProps> = ({
               onChange={(e) => setFormData({ ...formData, pinCode: e.target.value })}
               placeholder="e.g. 411001"
               maxLength={6}
-              className="w-full px-3.5 py-2.5 rounded-lg border border-[#E5D3C2] bg-white text-sm text-[#292923] focus:outline-none focus:ring-2 focus:ring-[#315B48]"
+              className="w-full px-4 py-2.5 rounded-2xl border-2 border-black bg-white text-sm font-bold text-black focus:outline-none focus:ring-2 focus:ring-black"
             />
           </div>
         </div>
 
         {/* Device Location Helper */}
-        <div className="p-4 rounded-xl bg-[#F5EAE0] border border-[#E5D3C2] space-y-2">
+        <div className="p-4 rounded-2xl bg-[#FFF2E8] border-2 border-black space-y-2">
           <div className="flex flex-wrap items-center justify-between gap-2">
             <div>
-              <span className="text-xs font-bold text-[#292923] block">
-                Automatic Geolocation Permission
+              <span className="text-xs font-black uppercase text-black block">
+                Automatic Geolocation
               </span>
-              <span className="text-[11px] text-[#615E52] block">
+              <span className="text-[11px] text-black/70 font-medium block">
                 Requests one-time device location when needed; no continuous tracking.
               </span>
             </div>
@@ -175,24 +176,26 @@ export const ProfileView: React.FC<ProfileViewProps> = ({
               size="sm"
               onClick={handleRequestLocation}
               icon={<Compass size={14} />}
+              className="bg-white hover:bg-black hover:text-white font-black text-xs"
             >
-              Request One-Time Location
+              Request Location
             </Button>
           </div>
 
           {locatingStatus && (
-            <p className="text-xs text-[#315B48] font-medium pt-1">
+            <p className="text-xs text-black font-bold pt-1">
               {locatingStatus}
             </p>
           )}
         </div>
 
         {/* Form Actions */}
-        <div className="pt-3 border-t border-[#E5D3C2] flex flex-wrap items-center justify-between gap-3">
+        <div className="pt-3 border-t-2 border-black/10 flex flex-wrap items-center justify-between gap-3">
           <Button
             type="submit"
             variant="primary"
             icon={isSaved ? <Check size={16} /> : undefined}
+            className="bg-black text-[#D4FF00] hover:bg-white hover:text-black font-black uppercase text-xs tracking-wider"
           >
             {isSaved ? 'Preferences Saved!' : 'Save Profile Changes'}
           </Button>
@@ -203,7 +206,7 @@ export const ProfileView: React.FC<ProfileViewProps> = ({
             size="sm"
             onClick={onResetProfile}
             icon={<RotateCcw size={14} />}
-            className="text-[#615E52]"
+            className="text-black/70 hover:text-black font-bold"
           >
             Reset to Default
           </Button>

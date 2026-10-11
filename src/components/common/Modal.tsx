@@ -47,31 +47,31 @@ export const Modal: React.FC<ModalProps> = ({
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/45 backdrop-blur-[2px] transition-opacity"
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs transition-opacity"
       role="dialog"
       aria-modal="true"
       aria-labelledby="modal-title"
     >
       <div
         ref={modalRef}
-        className={`w-full ${widthClass} bg-[#FFF9F4] rounded-xl border border-[#E5D3C2] shadow-xl overflow-hidden transition-all`}
+        className={`w-full ${widthClass} bg-white rounded-3xl border-2 border-black shadow-[0_16px_0_0_#121212] overflow-hidden transition-all`}
       >
-        <div className="flex items-start justify-between p-5 border-b border-[#E5D3C2] bg-[#F8EFE5]">
+        <div className="flex items-start justify-between p-6 border-b-2 border-black bg-[#FFF2E8]">
           <div>
-            <h3 id="modal-title" className="font-serif text-lg font-bold text-[#292923]">
+            <h3 id="modal-title" className="font-['Syne'] text-xl font-black text-black">
               {title}
             </h3>
-            {subtitle && <p className="text-xs text-[#615E52] mt-0.5">{subtitle}</p>}
+            {subtitle && <p className="text-xs text-black/70 font-semibold mt-0.5">{subtitle}</p>}
           </div>
           <button
             onClick={onClose}
-            className="p-1 rounded-md text-[#615E52] hover:text-[#292923] hover:bg-[#E5D3C2]/50 transition-colors cursor-pointer"
+            className="p-1.5 rounded-xl bg-white border border-black hover:bg-black hover:text-white transition-colors cursor-pointer"
             aria-label="Close dialog"
           >
             <X size={18} />
           </button>
         </div>
-        <div className="p-5">{children}</div>
+        <div className="p-6">{children}</div>
       </div>
     </div>
   );

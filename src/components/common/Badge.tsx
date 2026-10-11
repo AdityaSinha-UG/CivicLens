@@ -14,43 +14,43 @@ export const Badge: React.FC<BadgeProps> = ({
   category,
   className = '',
 }) => {
-  let colorStyles = 'bg-[#F5EAE0] text-[#615E52] border-[#E5D3C2]';
+  let colorStyles = 'bg-white text-black border-black';
 
   if (variant === 'demo') {
-    colorStyles = 'bg-[#FAF2E3] text-[#8C6415] border-[#D9A441]/40 font-semibold';
+    colorStyles = 'bg-[#FFF2E8] text-[#FA541C] border-black font-black uppercase text-[10px] tracking-wider';
   } else if (variant === 'source') {
-    colorStyles = 'bg-[#E8F0EC] text-[#315B48] border-[#315B48]/30 font-medium';
+    colorStyles = 'bg-black text-[#D4FF00] border-black font-black uppercase text-[10px]';
   } else if (variant === 'highlight') {
-    colorStyles = 'bg-[#D9A441]/15 text-[#8C6415] border-[#D9A441]/40 font-semibold';
+    colorStyles = 'bg-[#D4FF00] text-black border-black font-black uppercase text-[10px]';
   } else if (variant === 'category' && category) {
     switch (category) {
       case 'Politics/Government':
-        colorStyles = 'bg-[#EAE4DC] text-[#4A473D] border-[#CBB4A0]';
+        colorStyles = 'bg-[#EEF2FF] text-[#3730A3] border-black';
         break;
       case 'Infrastructure/Roads':
-        colorStyles = 'bg-[#F2E8DC] text-[#784D2B] border-[#D8BC9D]';
+        colorStyles = 'bg-[#FEF3C7] text-[#92400E] border-black';
         break;
       case 'Utilities':
-        colorStyles = 'bg-[#E5EEF3] text-[#2C526A] border-[#B7D2E2]';
+        colorStyles = 'bg-[#E0F2FE] text-[#0369A1] border-black';
         break;
       case 'Disasters/Emergencies':
-        colorStyles = 'bg-[#FCEBE9] text-[#9A2E22] border-[#E8B4AF] font-semibold';
+        colorStyles = 'bg-[#FEE2E2] text-[#B91C1C] border-black font-black';
         break;
       case 'Traffic/Transport':
-        colorStyles = 'bg-[#E8F0EC] text-[#285741] border-[#B6D4C5]';
+        colorStyles = 'bg-[#DCFCE7] text-[#15803D] border-black';
         break;
       case 'Public Safety':
-        colorStyles = 'bg-[#EBE9F5] text-[#46387E] border-[#C7C0E4]';
+        colorStyles = 'bg-[#F3E8FF] text-[#6B21A8] border-black';
         break;
       case 'Community/Other':
-        colorStyles = 'bg-[#F6EFE6] text-[#635547] border-[#DFCFBE]';
+        colorStyles = 'bg-[#FFF7ED] text-[#C2410C] border-black';
         break;
     }
   }
 
   return (
     <span
-      className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs border tracking-tight ${colorStyles} ${className}`}
+      className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-black tracking-tight border-2 shadow-[0_2px_0_0_#121212] ${colorStyles} ${className}`}
     >
       {children}
     </span>

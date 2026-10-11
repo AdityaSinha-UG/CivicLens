@@ -1,8 +1,9 @@
 import React from 'react';
-import { Sparkles } from 'lucide-react';
+import { Sparkles, Newspaper } from 'lucide-react';
 import { NewsArticle, CivicCategory } from '../types/news';
 import { SearchBar } from '../components/news/SearchBar';
 import { NewsCard } from '../components/news/NewsCard';
+import { FeaturedCarousel } from '../components/news/FeaturedCarousel';
 import { LoadingState } from '../components/news/LoadingState';
 import { EmptyState } from '../components/news/EmptyState';
 import { ErrorState } from '../components/news/ErrorState';
@@ -42,61 +43,74 @@ export const MainNewsView: React.FC<MainNewsViewProps> = ({
       <DemoNoticeBanner />
 
       {/* Editorial Page Header & Section Title */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[#E5D3C2]">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b-2 border-black/15">
         <div>
-          <span className="text-xs uppercase font-bold tracking-wider text-[#315B48]">
-            Local Civic Dispatch
-          </span>
-          <h1 className="font-serif text-2xl sm:text-3xl font-bold text-[#292923] mt-0.5">
-            Reports & Notices for {locality}
+          <div className="flex items-center gap-2">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-black uppercase tracking-wider bg-black text-[#D4FF00]">
+              <Newspaper size={13} />
+              <span>HYPERLOCAL BULLETIN</span>
+            </span>
+            <span className="text-xs font-bold uppercase tracking-wider text-black/80">
+              {locality} Edition
+            </span>
+          </div>
+          <h1 className="font-['Syne'] text-3xl sm:text-4xl md:text-5xl font-black text-black tracking-tight mt-2">
+            Civic Radar: {locality}
           </h1>
-          <p className="text-xs sm:text-sm text-[#615E52] mt-1">
-            Verified updates covering road repairs, water supply, public transit, and municipal notices.
+          <p className="text-xs sm:text-sm text-black/85 font-medium mt-1">
+            Verified local dispatches across public transit, road infrastructure, water supply, and municipal notices.
           </p>
         </div>
 
-        {/* Action button */}
+        {/* Action button: Create Flashcards */}
         <div className="shrink-0">
           <Button
             variant="secondary"
             onClick={onCreateFlashcards}
-            icon={<Sparkles size={16} className="text-[#292923]" />}
-            className="w-full sm:w-auto shadow-xs font-semibold"
+            icon={<Sparkles size={16} className="text-black" />}
+            className="w-full sm:w-auto font-black text-sm uppercase tracking-wider shadow-[0_5px_0_0_#121212] bg-[#D4FF00] hover:bg-white text-black border-2 border-black"
           >
             Create Flashcards ({articles.length})
           </Button>
         </div>
       </div>
 
+      {/* Top Prominent Featured News Carousel */}
+      {!isLoading && !error && articles.length > 0 && !searchQuery && selectedCategory === 'All' && (
+        <FeaturedCarousel articles={articles} />
+      )}
+
       {/* Search Bar & Category Filters */}
-      <SearchBar
-        locality={locality}
-        searchQuery={searchQuery}
-        selectedCategory={selectedCategory}
-        isLoading={isLoading}
-        onSearch={onSearch}
-        onSelectCategory={onSelectCategory}
-        onRefresh={onRefresh}
-      />
+      <div className="bg-white/95 backdrop-blur-md rounded-3xl p-5 border-2 border-black shadow-[0_8px_0_0_#121212]">
+        <SearchBar
+          locality={locality}
+          searchQuery={searchQuery}
+          selectedCategory={selectedCategory}
+          isLoading={isLoading}
+          onSearch={onSearch}
+          onSelectCategory={onSelectCategory}
+          onRefresh={onRefresh}
+        />
+      </div>
 
       {/* Feed Area */}
       <div>
         {/* Results Metadata */}
         {!isLoading && !error && (
-          <div className="flex items-center justify-between text-xs text-[#615E52] mb-4 px-1">
+          <div className="flex items-center justify-between text-xs font-bold text-black mb-4 px-2">
             <div>
               <span>
-                Showing <strong className="text-[#292923]">{articles.length}</strong> reports in{' '}
-                <strong className="text-[#315B48]">{locality}</strong>
+                Dispatches: <strong className="bg-black text-[#D4FF00] px-2 py-0.5 rounded-md font-mono">{articles.length}</strong> in{' '}
+                <strong className="underline decoration-2 underline-offset-2">{locality}</strong>
               </span>
               {selectedCategory !== 'All' && (
                 <span>
-                  {' '}• Category: <strong className="text-[#292923]">{selectedCategory}</strong>
+                  {' '}• Category: <strong className="bg-white px-2 py-0.5 rounded-md border border-black">{selectedCategory}</strong>
                 </span>
               )}
               {searchQuery && (
                 <span>
-                  {' '}• Query: <strong className="text-[#292923]">"{searchQuery}"</strong>
+                  {' '}• Query: <strong className="bg-white px-2 py-0.5 rounded-md border border-black">"{searchQuery}"</strong>
                 </span>
               )}
             </div>
@@ -104,9 +118,9 @@ export const MainNewsView: React.FC<MainNewsViewProps> = ({
             {(searchQuery || selectedCategory !== 'All') && (
               <button
                 onClick={onResetFilters}
-                className="text-xs text-[#315B48] hover:underline font-semibold cursor-pointer"
+                className="text-xs text-black hover:text-white bg-white hover:bg-black px-2.5 py-1 rounded-full border border-black font-black transition-colors cursor-pointer"
               >
-                Clear all filters
+                Reset filters
               </button>
             )}
           </div>
@@ -125,7 +139,7 @@ export const MainNewsView: React.FC<MainNewsViewProps> = ({
             onReset={onResetFilters}
           />
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4.5">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             {articles.map((article) => (
               <NewsCard key={article.id} article={article} />
             ))}

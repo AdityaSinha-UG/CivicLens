@@ -20,37 +20,37 @@ export const Button: React.FC<ButtonProps> = ({
   ...props
 }) => {
   const baseStyles =
-    'inline-flex items-center justify-center font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#315B48] focus-visible:ring-offset-2 focus-visible:ring-offset-[#FBE5D6] disabled:opacity-50 disabled:cursor-not-allowed select-none rounded-lg cursor-pointer';
+    'inline-flex items-center justify-center font-bold transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed select-none rounded-2xl cursor-pointer active:translate-y-[1px]';
 
   let variantStyles = '';
   switch (variant) {
     case 'primary':
-      variantStyles = 'bg-[#315B48] hover:bg-[#244637] text-white shadow-sm active:bg-[#1C362A]';
+      variantStyles = 'bg-black hover:bg-[#1E1E1E] text-white border-2 border-black shadow-[0_4px_0_0_#121212]';
       break;
     case 'secondary':
-      variantStyles = 'bg-[#D9A441] hover:bg-[#C59132] text-[#292923] font-semibold shadow-sm active:bg-[#B38025]';
+      variantStyles = 'bg-[#D4FF00] hover:bg-white text-black border-2 border-black shadow-[0_4px_0_0_#121212] font-black';
       break;
     case 'outline':
-      variantStyles = 'border border-[#E5D3C2] bg-[#FFF9F4] hover:bg-[#F6EDE4] text-[#292923] active:bg-[#EFE1D4]';
+      variantStyles = 'border-2 border-black bg-white hover:bg-black hover:text-white text-black shadow-[0_3px_0_0_#121212]';
       break;
     case 'ghost':
-      variantStyles = 'bg-transparent hover:bg-[#315B48]/10 text-[#292923] active:bg-[#315B48]/15';
+      variantStyles = 'bg-transparent hover:bg-black/10 text-black border-2 border-transparent';
       break;
     case 'danger':
-      variantStyles = 'bg-[#A7382B] hover:bg-[#8F2F23] text-white shadow-sm';
+      variantStyles = 'bg-[#DC2626] hover:bg-[#B91C1C] text-white border-2 border-black shadow-[0_3px_0_0_#121212]';
       break;
   }
 
   let sizeStyles = '';
   switch (size) {
     case 'sm':
-      sizeStyles = 'px-3 py-1.5 text-xs gap-1.5';
+      sizeStyles = 'px-3.5 py-1.5 text-xs gap-1.5';
       break;
     case 'md':
-      sizeStyles = 'px-4 py-2 text-sm gap-2';
+      sizeStyles = 'px-4.5 py-2.5 text-sm gap-2';
       break;
     case 'lg':
-      sizeStyles = 'px-5 py-2.5 text-base gap-2.5';
+      sizeStyles = 'px-6 py-3 text-base gap-2.5';
       break;
   }
 
