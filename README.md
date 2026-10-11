@@ -1,79 +1,60 @@
 # CivicLens 🗞️
 
-CivicLens is a lightweight hyperlocal civic news discovery web application built with modern React, TypeScript, and an editorial design system. It helps residents discover local news and civic updates relevant to their selected municipal locality (e.g., Pune).
+CivicLens is a vibrant, modern, Gen Z-oriented hyperlocal civic news discovery web application. It transforms local municipal updates, transit notices, and civic announcements into an immersive visual digital publication.
 
 ---
 
-## 🎨 Visual Design Tokens
+## 🎨 Creative Direction & Visual Identity
 
-Built around a clean, trustworthy editorial aesthetic inspired by print newspapers redesigned for the modern web:
+Built with an energetic, bold, and media-forward aesthetic:
 
-| Design Token | Hex Code | Description |
-|---|---|---|
-| **Main Background** | `#FBE5D6` | Soft peach background |
-| **Card & Surfaces** | `#FFF9F4` | Warm light card and content surfaces |
-| **Primary Text** | `#292923` | High-contrast dark slate body and headlines |
-| **Primary Accent** | `#315B48` | Deep forest green for actions, active tabs, and tags |
-| **Secondary Highlight** | `#D9A441` | Warm mustard gold for flashcards and key badges |
-| **Warm Borders** | `#E5D3C2` | Subtle warm neutral borders |
+- **Primary Background**: Rich, unapologetic electric orange (`#FA541C` / `#E03E0B`).
+- **High-Contrast Surfaces**: Deep obsidian black (`#121212`) and crisp white (`#FFFFFF`) with 2px borders and punchy hard drop shadows (`shadow-[0_8px_0_0_#121212]`).
+- **Accent Pops**: Electric Lime (`#D4FF00`) for top story alerts, verified notice tags, and progress indicators.
+- **Typography**: High-fashion editorial display font (**Syne**) for headlines and mastheads, paired with **Plus Jakarta Sans** for body text.
+- **Cinematic Scrims**: Smooth multi-stop dark gradients layered over photography to ensure white text remains legible across all lighting conditions.
 
 ---
 
-## 🏛️ Phase 1 Architecture & Features
+## 🌟 Key Features
 
-### 1. Main News Discovery Feed
-- **Header & Locality Indicator**: Persistent selected locality (default: **Pune**) with one-click locality change modal.
-- **Search & Filter Controls**:
-  - Local topic and incident search.
-  - Search button and instant refresh control.
-  - Quick suggested queries: *"Pune traffic updates"*, *"Water supply interruptions"*, *"Road closures and construction"*, *"Local government announcements"*.
-  - Category filters: *Politics/Government*, *Infrastructure/Roads*, *Utilities*, *Disasters/Emergencies*, *Traffic/Transport*, *Public Safety*, *Community/Other*.
-- **Editorial News Cards**:
-  - Headline and short factual description.
-  - Verified source badge and publisher attribution.
-  - Publication timestamp.
-  - Category tag and thumbnail container with category-specific graphic fallback.
-  - Direct **"Read Original Article"** link.
-- **States & Responsible Messaging**:
-  - Animated skeleton loading state.
-  - Resilient error state with retry.
-  - Fact-compliant empty state clarifying dataset boundaries (*absence of search results does not mean no civic incidents exist*).
+### 1. Featured News Carousel (Main Page)
+- Prominent top carousel showcasing top local civic stories.
+- Full-bleed immersive photography with overlaid text and dark gradient scrims.
+- Includes category tag, bold headline, factual description, verified publisher, and direct original article link.
+- Previous / Next arrow controls and `1 / 6` slide pip indicator.
 
-### 2. Civic Flashcards
-- **Interactive Browsing**:
-  - **Card View**: Carousel presentation mode with Previous, Next, and keyboard arrow controls.
-  - **Grid View**: Full overview of all generated cards.
-  - **Category Filtering**: Instant category slice.
-  - Direct link back to local news feed.
-- **Deterministic Engine**: Sentence extraction and category-based impact rules without non-deterministic AI generation.
+### 2. Full-Bleed Image Flashcards
+- Full-bleed photographic background with overlaid text.
+- Multi-modal navigation synchronized across all input methods:
+  - **Touch Swipe**: Swipe left (Next) / Swipe right (Previous).
+  - **Mouse Wheel / Trackpad**: Scroll down (Next) / Scroll up (Previous) with smooth 450ms debounce lockout to prevent accidental skips.
+  - **Visible Arrow Buttons**: Previous & Next buttons.
+  - **Keyboard**: Left and Right arrow keys.
+  - **Position Progress**: Real-time progress bar and counter (`Card X of Y`).
+  - **Grid View Toggle**: Switch between deck view and full grid view.
+  - **Category Filter**: Instant category filtering.
 
-### 3. Profile & Locality Setup
-- **Onboarding Modal**: Greets first-time visitors to set their locality, PIN code, and optional name.
-- **Locality Settings**:
-  - View and edit name, unverified phone number, locality, and PIN code.
-  - One-time device geolocation permission request with graceful manual PIN fallback.
-  - Clear disclosure that profile is stored in `localStorage` without cloud accounts or external databases.
+### 3. Local Civic Feed & Search
+- Local search bar with topic chips (*Pune traffic updates*, *Water supply interruptions*, etc.).
+- Category pill filters with distinct high-contrast color codes.
+- Deterministic empty state and error boundary with retry.
+
+### 4. Demo Profile & Locality Setup
+- Onboarding flow with one-time device location permission request and manual PIN code fallback.
+- Locally persisted in `localStorage` without cloud tracking.
 
 ---
 
-## 🚀 Running the Project Locally
+## 🚀 Running Locally
 
-### 1. Prerequisites
-- Node.js `v18+` (tested on Node `v24.20.0`)
-- npm `v9+` (tested on npm `v11.19.0`)
-
-### 2. Development Server
 ```bash
+# Start development server
 npm run dev
-```
-Open [http://localhost:5173](http://localhost:5173) in your browser.
 
-### 3. Build & Typecheck
-```bash
+# Build for production
 npm run build
-```
 
-### 4. Preview Production Build
-```bash
+# Preview build
 npm run preview
 ```
