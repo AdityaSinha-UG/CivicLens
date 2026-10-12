@@ -89,3 +89,4 @@ CivicLens includes a lightweight local server-side middleware (`GET /api/news`) 
 - **Without an API key**: CivicLens runs in offline demo mode using curated local Pune civic mock records, allowing full UI, carousel, search, filter, and flashcard interaction without crashing.
 - **With a valid API key**: Requests query SerpApi for authentic local civic news, normalize results, deduplicate stories, and cache responses in memory (15-minute TTL) to conserve API credits.
 - **Development Notice**: The Vite middleware endpoint is designed specifically for local hackathon development on a single machine, not as a production cloud hosting backend.
+
