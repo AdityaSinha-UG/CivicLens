@@ -6,7 +6,7 @@ import { MainNewsView } from './views/MainNewsView';
 import { FlashcardsView } from './views/FlashcardsView';
 import { ProfileView } from './components/profile/ProfileView';
 import { OnboardingModal } from './components/profile/OnboardingModal';
-import { LocalityModal } from './components/profile/LocalityModal';
+import { LocationPickerModal } from './components/profile/LocationPickerModal';
 import { newsService } from './services/newsService';
 import { storageService } from './services/storageService';
 import { generateFlashcardsFromArticleList } from './services/flashcardService';
@@ -217,8 +217,8 @@ export const App: React.FC = () => {
         onDismiss={() => setIsOnboardingOpen(false)}
       />
 
-      {/* Locality Switch Modal */}
-      <LocalityModal
+      {/* Location Picker Modal */}
+      <LocationPickerModal
         isOpen={isLocalityModalOpen}
         currentLocality={profile.locality}
         onClose={() => setIsLocalityModalOpen(false)}

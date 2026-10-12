@@ -61,27 +61,28 @@ export const Sidebar: React.FC<SidebarProps> = ({
           </div>
         </div>
 
-        {/* Selected Locality indicator */}
-        <div className="mt-6 p-3 rounded-2xl bg-[#FFF2E8] dark:bg-[#2E1F0D] border-2 border-black dark:border-[#5A3A1A] flex items-center justify-between shadow-[0_3px_0_0_#121212]">
+        {/* Active Locality — click to open Location Picker */}
+        <button
+          onClick={onOpenLocalityModal}
+          title="Change location for news"
+          className="mt-6 w-full p-3 rounded-2xl bg-[#FFF2E8] dark:bg-[#2E1F0D] border-2 border-black dark:border-[#5A3A1A] flex items-center justify-between shadow-[0_3px_0_0_#121212] hover:border-[#FA541C] hover:shadow-[0_3px_0_0_#FA541C] transition-all group cursor-pointer"
+          aria-label={`Active location: ${locality || 'Pune'}. Click to change.`}
+        >
           <div className="flex items-center gap-2 overflow-hidden">
             <MapPin size={16} className="text-[#FA541C] shrink-0" />
-            <div className="truncate">
+            <div className="truncate text-left">
               <span className="text-[9px] text-black/60 dark:text-[#F5EEE6]/50 uppercase font-black block leading-none">
-                Active Locality
+                Active Location
               </span>
               <span className="text-sm font-extrabold text-black dark:text-[#F5EEE6] truncate block mt-0.5">
                 {locality || 'Pune'}
               </span>
             </div>
           </div>
-          <button
-            onClick={onOpenLocalityModal}
-            className="text-[11px] font-black text-black dark:text-[#F5EEE6] hover:text-[#FA541C] dark:hover:text-[#FA541C] underline decoration-2 uppercase px-1.5 py-0.5 cursor-pointer"
-            title="Change active locality"
-          >
+          <span className="text-[11px] font-black text-black/40 dark:text-[#F5EEE6]/40 group-hover:text-[#FA541C] uppercase tracking-wider shrink-0 ml-1 transition-colors">
             Change
-          </button>
-        </div>
+          </span>
+        </button>
       </div>
 
       {/* Navigation List */}
