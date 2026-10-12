@@ -24,6 +24,7 @@ interface ProfileViewProps {
   onSaveProfile: (profile: UserProfile) => void;
   onResetProfile: () => void;
   onSignOut: () => void;
+  onDeleteAccount: () => void;
   onOpenLocalityModal?: () => void;
 }
 
@@ -32,12 +33,15 @@ export const ProfileView: React.FC<ProfileViewProps> = ({
   onSaveProfile,
   onResetProfile,
   onSignOut,
+  onDeleteAccount,
   onOpenLocalityModal,
 }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState<UserProfile>(profile);
   const [isSavedBanner, setIsSavedBanner] = useState(false);
   const [isSignOutModalOpen, setIsSignOutModalOpen] = useState(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [deleteConfirmText, setDeleteConfirmText] = useState('');
   const [locatingStatus, setLocatingStatus] = useState<string | null>(null);
 
   // Derive user initials for avatar
@@ -141,6 +145,15 @@ export const ProfileView: React.FC<ProfileViewProps> = ({
             className="bg-white dark:bg-[#231A0F] hover:bg-[#DC2626] dark:hover:bg-[#DC2626] hover:text-white hover:border-[#DC2626] text-black dark:text-[#F5EEE6] font-black uppercase text-xs tracking-wider border-2 border-black dark:border-[#5A3A1A] shadow-[0_3px_0_0_#121212]"
           >
             Sign Out
+          </Button>
+
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => { setDeleteConfirmText(''); setIsDeleteModalOpen(true); }}
+            className="bg-white dark:bg-[#231A0F] hover:bg-[#7F1D1D] dark:hover:bg-[#7F1D1D] hover:text-white text-[#DC2626] dark:text-[#FCA5A5] font-black uppercase text-xs tracking-wider border-2 border-[#DC2626] dark:border-[#7F1D1D] shadow-[0_3px_0_0_#DC2626]"
+          >
+            Delete Account
           </Button>
         </div>
       </div>
@@ -485,6 +498,66 @@ export const ProfileView: React.FC<ProfileViewProps> = ({
               className="font-black uppercase text-xs tracking-wider"
             >
               Confirm Sign Out
+            </Button>
+          </div>
+        </div>
+      </Modal>
+
+      {/* DELETE ACCOUNT CONFIRMATION MODAL */}
+      <Modal
+        isOpen={isDeleteModalOpen}
+        onClose={() => { setIsDeleteModalOpen(false); setDeleteConfirmText(''); }}
+        title="Delete Account"
+        subtitle="This action cannot be undone"
+        maxWidth="sm"
+      >
+        <div className="space-y-4">
+          <div className="flex items-start gap-3 p-3.5 bg-[#FEE2E2] dark:bg-[#3D1414] border-2 border-[#DC2626] rounded-2xl text-xs text-[#7F1D1D] dark:text-[#FCA5A5]">
+            <AlertTriangle size={20} className="text-[#DC2626] shrink-0 mt-0.5" />
+            <p className="leading-snug font-medium">
+              Deleting your account permanently removes all your profile data, locality settings, and preferences from this device. There is no recovery option.
+            </p>
+          </div>
+
+          <div>
+            <label className="block text-xs font-black uppercase tracking-wider text-black dark:text-[#F5EEE6] mb-1.5">
+              Type <span className="font-mono bg-[#FEE2E2] dark:bg-[#3D1414] text-[#DC2626] px-1 rounded">DELETE</span> to confirm
+            </label>
+            <input
+              type="text"
+              value={deleteConfirmText}
+              onChange={(e) => setDeleteConfirmText(e.target.value)}
+              placeholder="Type DELETE here"
+              autoComplete="off"
+              className="w-full px-3.5 py-2.5 rounded-2xl border-2 border-[#DC2626] dark:border-[#7F1D1D] bg-white dark:bg-[#2A1010] text-sm font-bold text-black dark:text-[#F5EEE6] focus:outline-none focus:ring-2 focus:ring-[#DC2626] font-mono tracking-widest"
+            />
+          </div>
+
+          <div className="flex items-center justify-end gap-2 pt-3 border-t-2 border-black/10 dark:border-[#5A3A1A]/50">
+            <Button
+              type="button"
+              variant="ghost"
+              size="sm"
+              onClick={() => { setIsDeleteModalOpen(false); setDeleteConfirmText(''); }}
+              className="font-bold text-xs text-black dark:text-[#F5EEE6]"
+            >
+              Cancel
+            </Button>
+            <Button
+              type="button"
+              variant="danger"
+              size="sm"
+              disabled={deleteConfirmText !== 'DELETE'}
+              onClick={() => {
+                if (deleteConfirmText === 'DELETE') {
+                  setIsDeleteModalOpen(false);
+                  setDeleteConfirmText('');
+                  onDeleteAccount();
+                }
+              }}
+              className="font-black uppercase text-xs tracking-wider disabled:opacity-40"
+            >
+              Delete Account
             </Button>
           </div>
         </div>

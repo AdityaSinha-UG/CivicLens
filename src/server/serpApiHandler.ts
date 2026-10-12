@@ -317,7 +317,8 @@ export async function handleNewsApiRequest(
         break;
     }
   } else {
-    serpQuery = `${locality} (traffic OR "road closed" OR water OR PMC OR municipal OR civic)`;
+    // General civic news — locality-agnostic terms (no PMC, PMPML, or other Pune-specific refs)
+    serpQuery = `${locality} (traffic OR "road closed" OR "water supply" OR municipal OR civic news)`;
   }
 
   try {

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { NavTab, Sidebar } from './components/common/Sidebar';
 import { BottomNav } from './components/common/BottomNav';
 import { Header } from './components/common/Header';
@@ -32,6 +32,9 @@ export const App: React.FC = () => {
   const [isDemoMode, setIsDemoMode] = useState<boolean>(true);
   const [statusMessage, setStatusMessage] = useState<string | undefined>();
 
+  // Prevent overlapping requests
+  const fetchInFlight = useRef(false);
+
   // Check onboarding on initial render
   useEffect(() => {
     if (!profile.hasCompletedOnboarding) {
@@ -39,8 +42,10 @@ export const App: React.FC = () => {
     }
   }, [profile.hasCompletedOnboarding]);
 
-  // Load news reports
+  // Load news reports (with in-flight guard)
   const fetchNews = useCallback(async (loc: string, queryText: string, cat: CivicCategory | 'All', forceRefresh = false) => {
+    if (fetchInFlight.current) return; // Skip if a request is already running
+    fetchInFlight.current = true;
     setIsLoading(true);
     setError(null);
     try {
@@ -54,7 +59,6 @@ export const App: React.FC = () => {
       setLastUpdated(result.lastUpdated);
       setIsDemoMode(result.isDemoMode);
       setStatusMessage(result.statusMessage);
-      // Deterministically generate flashcards from the retrieved articles
       const generatedCards = generateFlashcardsFromArticleList(result.articles);
       setFlashcards(generatedCards);
     } catch (err) {
@@ -62,12 +66,22 @@ export const App: React.FC = () => {
       setError('Unable to load civic notices. Please check connection and try again.');
     } finally {
       setIsLoading(false);
+      fetchInFlight.current = false;
     }
   }, []);
 
   // Fetch when locality, query, or category changes
   useEffect(() => {
     fetchNews(profile.locality, searchQuery, selectedCategory);
+  }, [profile.locality, searchQuery, selectedCategory, fetchNews]);
+
+  // Auto-refresh every 12 minutes to keep the feed current
+  useEffect(() => {
+    const AUTO_REFRESH_MS = 12 * 60 * 1000;
+    const timer = setInterval(() => {
+      fetchNews(profile.locality, searchQuery, selectedCategory, true);
+    }, AUTO_REFRESH_MS);
+    return () => clearInterval(timer);
   }, [profile.locality, searchQuery, selectedCategory, fetchNews]);
 
   // Handlers
@@ -94,6 +108,16 @@ export const App: React.FC = () => {
     storageService.resetProfile();
     const defaults = storageService.getProfile();
     setProfile(defaults);
+    setIsOnboardingOpen(true);
+    setCurrentTab('main');
+  };
+
+  const handleDeleteAccount = () => {
+    storageService.resetProfile();
+    const defaults = storageService.getProfile();
+    setProfile(defaults);
+    setSearchQuery('');
+    setSelectedCategory('All');
     setIsOnboardingOpen(true);
     setCurrentTab('main');
   };
@@ -173,6 +197,7 @@ export const App: React.FC = () => {
               onSaveProfile={handleSaveProfile}
               onResetProfile={handleResetProfile}
               onSignOut={handleSignOut}
+              onDeleteAccount={handleDeleteAccount}
               onOpenLocalityModal={() => setIsLocalityModalOpen(true)}
             />
           )}
