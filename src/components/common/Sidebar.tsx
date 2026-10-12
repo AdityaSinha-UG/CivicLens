@@ -1,5 +1,6 @@
 import React from 'react';
-import { Newspaper, BookOpen, User, MapPin, Compass } from 'lucide-react';
+import { Newspaper, BookOpen, User, MapPin, Compass, Sun, Moon } from 'lucide-react';
+import { useTheme } from '../../context/ThemeContext';
 
 export type NavTab = 'main' | 'flashcards' | 'profile';
 
@@ -16,6 +17,8 @@ export const Sidebar: React.FC<SidebarProps> = ({
   locality,
   onOpenLocalityModal,
 }) => {
+  const { isDark, toggleTheme } = useTheme();
+
   const navItems = [
     {
       id: 'main' as NavTab,
@@ -39,17 +42,17 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
   return (
     <aside
-      className="hidden md:flex flex-col w-68 shrink-0 bg-white border-r-2 border-black min-h-screen p-6 select-none sticky top-0 h-screen shadow-[4px_0_0_0_rgba(0,0,0,0.06)]"
+      className="hidden md:flex flex-col w-68 shrink-0 bg-white dark:bg-[#18110A] border-r-2 border-black dark:border-[#5A3A1A] min-h-screen p-6 select-none sticky top-0 h-screen shadow-[4px_0_0_0_rgba(0,0,0,0.06)] dark:shadow-[4px_0_0_0_rgba(0,0,0,0.4)]"
       aria-label="Desktop Sidebar Navigation"
     >
       {/* Brand Header */}
-      <div className="pb-6 border-b-2 border-black/10">
+      <div className="pb-6 border-b-2 border-black/10 dark:border-[#5A3A1A]/50">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-2xl bg-black text-[#D4FF00] flex items-center justify-center border-2 border-black shadow-[0_4px_0_0_#121212]">
+          <div className="w-10 h-10 rounded-2xl bg-black dark:bg-[#FA541C] text-[#D4FF00] dark:text-black flex items-center justify-center border-2 border-black dark:border-[#FA541C] shadow-[0_4px_0_0_#121212]">
             <Compass size={22} className="stroke-[2.5]" />
           </div>
           <div>
-            <span className="font-['Syne'] text-2xl font-black tracking-tight text-black block leading-none">
+            <span className="font-['Syne'] text-2xl font-black tracking-tight text-black dark:text-[#F5EEE6] block leading-none">
               CivicLens
             </span>
             <span className="text-[10px] uppercase tracking-widest text-[#FA541C] font-black mt-1 block">
@@ -59,21 +62,21 @@ export const Sidebar: React.FC<SidebarProps> = ({
         </div>
 
         {/* Selected Locality indicator */}
-        <div className="mt-6 p-3 rounded-2xl bg-[#FFF2E8] border-2 border-black flex items-center justify-between shadow-[0_3px_0_0_#121212]">
+        <div className="mt-6 p-3 rounded-2xl bg-[#FFF2E8] dark:bg-[#2E1F0D] border-2 border-black dark:border-[#5A3A1A] flex items-center justify-between shadow-[0_3px_0_0_#121212]">
           <div className="flex items-center gap-2 overflow-hidden">
             <MapPin size={16} className="text-[#FA541C] shrink-0" />
             <div className="truncate">
-              <span className="text-[9px] text-black/60 uppercase font-black block leading-none">
+              <span className="text-[9px] text-black/60 dark:text-[#F5EEE6]/50 uppercase font-black block leading-none">
                 Active Locality
               </span>
-              <span className="text-sm font-extrabold text-black truncate block mt-0.5">
+              <span className="text-sm font-extrabold text-black dark:text-[#F5EEE6] truncate block mt-0.5">
                 {locality || 'Pune'}
               </span>
             </div>
           </div>
           <button
             onClick={onOpenLocalityModal}
-            className="text-[11px] font-black text-black hover:text-[#FA541C] underline decoration-2 uppercase px-1.5 py-0.5 cursor-pointer"
+            className="text-[11px] font-black text-black dark:text-[#F5EEE6] hover:text-[#FA541C] dark:hover:text-[#FA541C] underline decoration-2 uppercase px-1.5 py-0.5 cursor-pointer"
             title="Change active locality"
           >
             Change
@@ -91,14 +94,14 @@ export const Sidebar: React.FC<SidebarProps> = ({
               onClick={() => onSelectTab(item.id)}
               className={`w-full flex items-center gap-3 px-4 py-3.5 rounded-2xl text-left transition-all cursor-pointer border-2 ${
                 isActive
-                  ? 'bg-black text-[#D4FF00] border-black shadow-[0_5px_0_0_#121212] font-black'
-                  : 'bg-white text-black hover:bg-[#FFF2E8] border-transparent hover:border-black font-bold'
+                  ? 'bg-black dark:bg-[#FA541C] text-[#D4FF00] dark:text-black border-black dark:border-[#FA541C] shadow-[0_5px_0_0_#121212] font-black'
+                  : 'bg-white dark:bg-[#231A0F] text-black dark:text-[#F5EEE6] hover:bg-[#FFF2E8] dark:hover:bg-[#2E1F0D] border-transparent hover:border-black dark:hover:border-[#5A3A1A] font-bold'
               }`}
               aria-current={isActive ? 'page' : undefined}
             >
               <div
                 className={`shrink-0 ${
-                  isActive ? 'text-[#D4FF00]' : 'text-black'
+                  isActive ? 'text-[#D4FF00] dark:text-black' : 'text-black dark:text-[#F5EEE6]'
                 }`}
               >
                 {item.icon}
@@ -109,29 +112,48 @@ export const Sidebar: React.FC<SidebarProps> = ({
                 </span>
                 <span
                   className={`text-[11px] block mt-0.5 truncate font-normal ${
-                    isActive ? 'text-white/70' : 'text-black/60'
+                    isActive ? 'text-white/70 dark:text-black/70' : 'text-black/60 dark:text-[#F5EEE6]/50'
                   }`}
                 >
                   {item.description}
                 </span>
               </div>
               {isActive && (
-                <span className="w-2 h-2 rounded-full bg-[#D4FF00] shrink-0" />
+                <span className="w-2 h-2 rounded-full bg-[#D4FF00] dark:bg-black shrink-0" />
               )}
             </button>
           );
         })}
       </nav>
 
-      {/* Footer Info / Badge */}
-      <div className="pt-4 border-t-2 border-black/10 text-xs text-black/70 space-y-1.5">
+      {/* Footer: Theme Toggle + Info */}
+      <div className="pt-4 border-t-2 border-black/10 dark:border-[#5A3A1A]/50 space-y-3">
+        {/* Theme Toggle */}
+        <button
+          onClick={toggleTheme}
+          className="w-full flex items-center justify-between px-3.5 py-2.5 rounded-2xl bg-[#FFF2E8] dark:bg-[#2E1F0D] border-2 border-black dark:border-[#5A3A1A] text-black dark:text-[#F5EEE6] hover:bg-[#FA541C] dark:hover:bg-[#FA541C] hover:text-white dark:hover:text-black transition-all cursor-pointer group"
+          aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+          title={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+        >
+          <span className="text-[11px] font-black uppercase tracking-wider">
+            {isDark ? 'Light Mode' : 'Dark Mode'}
+          </span>
+          <div className="relative w-8 h-4 flex items-center">
+            {isDark ? (
+              <Sun size={16} className="text-[#FA541C] group-hover:text-black transition-colors" />
+            ) : (
+              <Moon size={16} className="text-black/70 group-hover:text-white transition-colors" />
+            )}
+          </div>
+        </button>
+
         <div className="flex items-center justify-between font-mono text-[10px] font-black">
-          <span className="bg-[#FFF2E8] text-[#FA541C] px-2 py-0.5 rounded border border-black/20">
+          <span className="bg-[#FFF2E8] dark:bg-[#2E1F0D] text-[#FA541C] px-2 py-0.5 rounded border border-black/20 dark:border-[#5A3A1A]">
             GEN Z EDITION
           </span>
-          <span className="text-black font-extrabold">PHASE 1</span>
+          <span className="text-black dark:text-[#F5EEE6] font-extrabold">PHASE 1</span>
         </div>
-        <p className="text-[11px] leading-snug font-medium text-black/60">
+        <p className="text-[11px] leading-snug font-medium text-black/60 dark:text-[#F5EEE6]/45">
           Deterministic local news discovery • SerpApi ready
         </p>
       </div>

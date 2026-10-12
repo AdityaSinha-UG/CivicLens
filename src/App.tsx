@@ -29,6 +29,8 @@ export const App: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<CivicCategory | 'All'>('All');
   const [lastUpdated, setLastUpdated] = useState('');
+  const [isDemoMode, setIsDemoMode] = useState<boolean>(true);
+  const [statusMessage, setStatusMessage] = useState<string | undefined>();
 
   // Check onboarding on initial render
   useEffect(() => {
@@ -38,7 +40,7 @@ export const App: React.FC = () => {
   }, [profile.hasCompletedOnboarding]);
 
   // Load news reports
-  const fetchNews = useCallback(async (loc: string, queryText: string, cat: CivicCategory | 'All') => {
+  const fetchNews = useCallback(async (loc: string, queryText: string, cat: CivicCategory | 'All', forceRefresh = false) => {
     setIsLoading(true);
     setError(null);
     try {
@@ -46,9 +48,12 @@ export const App: React.FC = () => {
         locality: loc,
         query: queryText,
         category: cat,
+        refresh: forceRefresh,
       });
       setArticles(result.articles);
       setLastUpdated(result.lastUpdated);
+      setIsDemoMode(result.isDemoMode);
+      setStatusMessage(result.statusMessage);
       // Deterministically generate flashcards from the retrieved articles
       const generatedCards = generateFlashcardsFromArticleList(result.articles);
       setFlashcards(generatedCards);
@@ -114,7 +119,7 @@ export const App: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#FA541C] text-black flex flex-col md:flex-row font-sans selection:bg-black selection:text-[#D4FF00]">
+    <div className="min-h-screen bg-[#FA541C] dark:bg-[#1A1208] text-black dark:text-[#F5EEE6] flex flex-col md:flex-row font-sans selection:bg-black selection:text-[#D4FF00]">
       {/* Desktop Sidebar Navigation */}
       <Sidebar
         currentTab={currentTab}
@@ -144,9 +149,11 @@ export const App: React.FC = () => {
               error={error}
               searchQuery={searchQuery}
               selectedCategory={selectedCategory}
+              isDemoMode={isDemoMode}
+              statusMessage={statusMessage}
               onSearch={setSearchQuery}
               onSelectCategory={setSelectedCategory}
-              onRefresh={() => fetchNews(profile.locality, searchQuery, selectedCategory)}
+              onRefresh={() => fetchNews(profile.locality, searchQuery, selectedCategory, true)}
               onCreateFlashcards={handleCreateFlashcards}
               onResetFilters={handleResetFilters}
             />

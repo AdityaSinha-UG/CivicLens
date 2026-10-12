@@ -35,6 +35,7 @@ export interface NewsFilterOptions {
   locality: string;
   query?: string;
   category?: CivicCategory | 'All';
+  refresh?: boolean;
 }
 
 export interface NewsSearchResult {
@@ -43,6 +44,8 @@ export interface NewsSearchResult {
   lastUpdated: string;
   queryExecuted: string;
   isDemoMode: boolean;
+  isConfigured?: boolean;
+  statusMessage?: string;
 }
 
 /**

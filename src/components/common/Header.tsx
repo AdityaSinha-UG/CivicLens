@@ -1,6 +1,7 @@
 import React from 'react';
-import { MapPin, Sparkles, Clock, Compass } from 'lucide-react';
+import { MapPin, Sparkles, Clock, Compass, Sun, Moon } from 'lucide-react';
 import { Button } from './Button';
+import { useTheme } from '../../context/ThemeContext';
 
 interface HeaderProps {
   locality: string;
@@ -17,21 +18,23 @@ export const Header: React.FC<HeaderProps> = ({
   onCreateFlashcards,
   showFlashcardAction = true,
 }) => {
+  const { isDark, toggleTheme } = useTheme();
+
   return (
-    <header className="border-b-2 border-black bg-white/95 backdrop-blur-md sticky top-0 z-30 px-4 md:px-8 py-3.5 flex items-center justify-between shadow-[0_4px_0_0_rgba(0,0,0,0.05)]">
+    <header className="border-b-2 border-black dark:border-[#5A3A1A] bg-white/95 dark:bg-[#18110A]/96 backdrop-blur-md sticky top-0 z-30 px-4 md:px-8 py-3.5 flex items-center justify-between shadow-[0_4px_0_0_rgba(0,0,0,0.05)] dark:shadow-[0_4px_0_0_rgba(0,0,0,0.4)]">
       {/* Brand mobile & Locality Selector */}
       <div className="flex items-center gap-3">
         <div className="md:hidden flex items-center gap-2">
-          <div className="w-8 h-8 rounded-xl bg-black text-[#D4FF00] flex items-center justify-center border-2 border-black">
+          <div className="w-8 h-8 rounded-xl bg-black dark:bg-[#FA541C] text-[#D4FF00] dark:text-black flex items-center justify-center border-2 border-black dark:border-[#FA541C]">
             <Compass size={18} />
           </div>
-          <span className="font-['Syne'] text-xl font-black text-black">CivicLens</span>
+          <span className="font-['Syne'] text-xl font-black text-black dark:text-[#F5EEE6]">CivicLens</span>
         </div>
 
         {/* Locality badge button */}
         <button
           onClick={onOpenLocalityModal}
-          className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#FFF2E8] hover:bg-[#FA541C] hover:text-white border-2 border-black text-black text-xs font-black transition-all cursor-pointer shadow-[0_2px_0_0_#121212] group"
+          className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#FFF2E8] dark:bg-[#2E1F0D] hover:bg-[#FA541C] dark:hover:bg-[#FA541C] hover:text-white border-2 border-black dark:border-[#5A3A1A] text-black dark:text-[#F5EEE6] text-xs font-black transition-all cursor-pointer shadow-[0_2px_0_0_#121212] group"
           aria-label={`Change locality, currently set to ${locality}`}
         >
           <MapPin size={14} className="text-[#FA541C] group-hover:text-white transition-colors" />
@@ -40,16 +43,16 @@ export const Header: React.FC<HeaderProps> = ({
 
         {/* Last updated indicator */}
         {lastUpdated && (
-          <div className="hidden sm:flex items-center gap-1 text-[11px] font-mono font-bold text-black/70 border-l-2 border-black/10 pl-3">
+          <div className="hidden sm:flex items-center gap-1 text-[11px] font-mono font-bold text-black/70 dark:text-[#F5EEE6]/50 border-l-2 border-black/10 dark:border-[#5A3A1A]/50 pl-3">
             <Clock size={12} />
             <span>Updated: <strong>{lastUpdated}</strong></span>
           </div>
         )}
       </div>
 
-      {/* Prominent Action Button: Create Flashcards */}
-      {showFlashcardAction && (
-        <div className="flex items-center gap-2">
+      {/* Right side: Flashcard action + Mobile theme toggle */}
+      <div className="flex items-center gap-2">
+        {showFlashcardAction && (
           <Button
             variant="secondary"
             size="sm"
@@ -59,8 +62,17 @@ export const Header: React.FC<HeaderProps> = ({
           >
             Create Flashcards
           </Button>
-        </div>
-      )}
+        )}
+
+        {/* Mobile theme toggle (md:hidden — desktop uses the sidebar toggle) */}
+        <button
+          onClick={toggleTheme}
+          className="md:hidden w-9 h-9 flex items-center justify-center rounded-2xl bg-[#FFF2E8] dark:bg-[#2E1F0D] border-2 border-black dark:border-[#5A3A1A] text-black dark:text-[#F5EEE6] hover:bg-[#FA541C] dark:hover:bg-[#FA541C] hover:text-white dark:hover:text-black transition-all cursor-pointer"
+          aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+        >
+          {isDark ? <Sun size={16} /> : <Moon size={16} />}
+        </button>
+      </div>
     </header>
   );
 };

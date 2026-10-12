@@ -58,3 +58,34 @@ npm run build
 # Preview build
 npm run preview
 ```
+
+---
+
+## 🔑 Backend & SerpApi Configuration
+
+CivicLens includes a lightweight local server-side middleware (`GET /api/news`) integrated directly into the Vite development server to query SerpApi's Google News engine securely without exposing secrets to the browser.
+
+### 1. Obtaining a SerpApi Key
+1. Sign up for a free or paid account at [serpapi.com](https://serpapi.com).
+2. Copy your private API key from the SerpApi dashboard.
+
+### 2. Configuring the Environment
+1. Copy `.env.example` to create a local `.env` file:
+   ```bash
+   cp .env.example .env
+   ```
+2. Set your API key inside `.env`:
+   ```bash
+   SERPAPI_API_KEY=your_actual_serpapi_key_here
+   ```
+
+> **Security Requirements**:
+> - Never prefix the key with `VITE_` (keys with `VITE_` are bundled into browser client code).
+> - Never commit `.env` or `.env.local` to version control (both are ignored in `.gitignore`).
+> - The key is read solely on the Node.js server side by the Vite development server middleware.
+
+### 3. Execution & Fallback Behavior
+- Run `npm run dev` to start the application.
+- **Without an API key**: CivicLens runs in offline demo mode using curated local Pune civic mock records, allowing full UI, carousel, search, filter, and flashcard interaction without crashing.
+- **With a valid API key**: Requests query SerpApi for authentic local civic news, normalize results, deduplicate stories, and cache responses in memory (15-minute TTL) to conserve API credits.
+- **Development Notice**: The Vite middleware endpoint is designed specifically for local hackathon development on a single machine, not as a production cloud hosting backend.

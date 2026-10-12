@@ -97,12 +97,13 @@ export const FlashcardViewer: React.FC<FlashcardViewerProps> = ({
     touchStartCoords.current = null;
   };
 
-  // Dedicated Native Wheel & Trackpad Navigation (Non-passive with e.preventDefault)
-  // Prevents the window from scrolling up/down while navigating flashcards
+  // Dedicated Native Wheel & Trackpad Navigation
+  // Attached exclusively to the flashcard container so wheel events ONLY fire when hovering over the card.
+  // Unconditionally prevents default window scrolling so the page NEVER scrolls up or down while scrolling over the flashcard.
   const deckContainerRef = useRef<HTMLDivElement>(null);
   const currentIndexRef = useRef(currentIndex);
   const filteredCardsRef = useRef(filteredCards);
-  const wheelLockRef = useRef(false);
+  const lastScrollTriggerRef = useRef<number>(0);
 
   useEffect(() => {
     currentIndexRef.current = currentIndex;
@@ -118,33 +119,34 @@ export const FlashcardViewer: React.FC<FlashcardViewerProps> = ({
     if (!container) return;
 
     const onWheel = (e: WheelEvent) => {
-      // Prevent browser default window scrolling so page does not jump up or down
+      // 1. ALWAYS prevent window scrolling while the user is scrolling over the flashcard
       e.preventDefault();
+      e.stopPropagation();
 
-      if (wheelLockRef.current) return;
+      const delta = Math.abs(e.deltaY) >= Math.abs(e.deltaX) ? e.deltaY : e.deltaX;
 
-      const delta = Math.abs(e.deltaY) > Math.abs(e.deltaX) ? e.deltaY : e.deltaX;
+      // Ignore tiny trackpad jitter
+      if (Math.abs(delta) < 15) {
+        return;
+      }
 
-      if (Math.abs(delta) > 15) {
-        if (delta > 0) {
-          // Scrolling DOWN -> advance to next card
-          if (currentIndexRef.current < filteredCardsRef.current.length - 1) {
-            wheelLockRef.current = true;
-            setCurrentIndex((prev) => prev + 1);
-          }
-        } else {
-          // Scrolling UP -> go back to previous card
-          if (currentIndexRef.current > 0) {
-            wheelLockRef.current = true;
-            setCurrentIndex((prev) => prev - 1);
-          }
+      const now = Date.now();
+      // Throttling lockout: ensures one deliberate wheel gesture flips exactly one card
+      if (now - lastScrollTriggerRef.current < 280) {
+        return;
+      }
+
+      if (delta > 0) {
+        // Scrolling DOWN -> next flashcard
+        if (currentIndexRef.current < filteredCardsRef.current.length - 1) {
+          lastScrollTriggerRef.current = now;
+          setCurrentIndex((prev) => prev + 1);
         }
-
-        // Controlled 300ms cooldown to ensure one deliberate scroll flips exactly one card
-        if (wheelLockRef.current) {
-          window.setTimeout(() => {
-            wheelLockRef.current = false;
-          }, 300);
+      } else if (delta < 0) {
+        // Scrolling UP -> previous flashcard
+        if (currentIndexRef.current > 0) {
+          lastScrollTriggerRef.current = now;
+          setCurrentIndex((prev) => prev - 1);
         }
       }
     };
@@ -163,25 +165,25 @@ export const FlashcardViewer: React.FC<FlashcardViewerProps> = ({
   return (
     <div className="space-y-6">
       {/* Top Controls: Return to Feed & View Mode Switch */}
-      <div className="flex flex-wrap items-center justify-between gap-3 pb-4 border-b-2 border-black/15">
+      <div className="flex flex-wrap items-center justify-between gap-3 pb-4 border-b-2 border-black/15 dark:border-[#5A3A1A]/50">
         <Button
           variant="outline"
           size="sm"
           onClick={onReturnToFeed}
           icon={<ArrowLeft size={16} />}
-          className="bg-white hover:bg-[#121212] hover:text-white border-2 border-black font-bold shadow-[0_4px_0_0_#121212]"
+          className="bg-white dark:bg-[#231A0F] hover:bg-[#121212] dark:hover:bg-[#FA541C] text-black dark:text-[#F5EEE6] hover:text-white dark:hover:text-black border-2 border-black dark:border-[#5A3A1A] font-bold shadow-[0_4px_0_0_#121212]"
         >
           Back to Feed
         </Button>
 
         {/* View mode toggle */}
-        <div className="flex items-center gap-1.5 bg-black/10 p-1 rounded-2xl border-2 border-black">
+        <div className="flex items-center gap-1.5 bg-black/10 dark:bg-white/10 p-1 rounded-2xl border-2 border-black dark:border-[#5A3A1A]">
           <button
             onClick={() => setViewMode('carousel')}
             className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-black transition-all cursor-pointer ${
               viewMode === 'carousel'
-                ? 'bg-[#121212] text-white shadow-sm'
-                : 'text-black hover:bg-black/10'
+                ? 'bg-[#121212] dark:bg-[#FA541C] text-white dark:text-black shadow-sm'
+                : 'text-black dark:text-[#F5EEE6] hover:bg-black/10 dark:hover:bg-white/10'
             }`}
             aria-pressed={viewMode === 'carousel'}
           >
@@ -192,8 +194,8 @@ export const FlashcardViewer: React.FC<FlashcardViewerProps> = ({
             onClick={() => setViewMode('grid')}
             className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-black transition-all cursor-pointer ${
               viewMode === 'grid'
-                ? 'bg-[#121212] text-white shadow-sm'
-                : 'text-black hover:bg-black/10'
+                ? 'bg-[#121212] dark:bg-[#FA541C] text-white dark:text-black shadow-sm'
+                : 'text-black dark:text-[#F5EEE6] hover:bg-black/10 dark:hover:bg-white/10'
             }`}
             aria-pressed={viewMode === 'grid'}
           >
@@ -205,7 +207,7 @@ export const FlashcardViewer: React.FC<FlashcardViewerProps> = ({
 
       {/* Category Filter Pills */}
       <div className="flex items-center gap-2 overflow-x-auto pb-1 no-scrollbar">
-        <span className="text-[11px] font-black text-black uppercase tracking-wider shrink-0 flex items-center gap-1 mr-1">
+        <span className="text-[11px] font-black text-black dark:text-[#F5EEE6] uppercase tracking-wider shrink-0 flex items-center gap-1 mr-1">
           <Tag size={13} />
           Filter:
         </span>
@@ -215,10 +217,10 @@ export const FlashcardViewer: React.FC<FlashcardViewerProps> = ({
             <button
               key={cat}
               onClick={() => setSelectedCategory(cat)}
-              className={`shrink-0 px-3.5 py-1.5 rounded-full text-xs font-black transition-all cursor-pointer border-2 border-black ${
+              className={`shrink-0 px-3.5 py-1.5 rounded-full text-xs font-black transition-all cursor-pointer border-2 border-black dark:border-[#5A3A1A] ${
                 isSelected
-                  ? 'bg-[#121212] text-[#D4FF00] shadow-[0_3px_0_0_#121212]'
-                  : 'bg-white text-black hover:bg-[#D4FF00]'
+                  ? 'bg-[#121212] dark:bg-[#FA541C] text-[#D4FF00] dark:text-black shadow-[0_3px_0_0_#121212]'
+                  : 'bg-white dark:bg-[#231A0F] text-black dark:text-[#F5EEE6] hover:bg-[#D4FF00] dark:hover:bg-[#3A2410]'
               }`}
               aria-pressed={isSelected}
             >
@@ -230,12 +232,12 @@ export const FlashcardViewer: React.FC<FlashcardViewerProps> = ({
 
       {/* Main Content Area */}
       {filteredCards.length === 0 ? (
-        <div className="bg-white border-2 border-black rounded-3xl p-8 text-center my-6 max-w-md mx-auto shadow-[0_8px_0_0_#121212]">
-          <Info size={32} className="text-black mx-auto mb-2" />
-          <h4 className="font-['Syne'] font-extrabold text-lg text-black">
+        <div className="bg-white dark:bg-[#231A0F] border-2 border-black dark:border-[#5A3A1A] rounded-3xl p-8 text-center my-6 max-w-md mx-auto shadow-[0_8px_0_0_#121212]">
+          <Info size={32} className="text-black dark:text-[#F5EEE6] mx-auto mb-2" />
+          <h4 className="font-['Syne'] font-extrabold text-lg text-black dark:text-[#F5EEE6]">
             No flashcards in this category
           </h4>
-          <p className="text-xs text-black/70 mt-1">
+          <p className="text-xs text-black/70 dark:text-[#F5EEE6]/70 mt-1">
             Try switching categories or view all cards for {locality}.
           </p>
           <div className="mt-5">
@@ -243,7 +245,7 @@ export const FlashcardViewer: React.FC<FlashcardViewerProps> = ({
               size="sm"
               variant="outline"
               onClick={() => setSelectedCategory('All')}
-              className="bg-black text-white hover:bg-[#D4FF00] hover:text-black font-bold"
+              className="bg-black dark:bg-[#FA541C] text-white dark:text-black hover:bg-[#D4FF00] dark:hover:bg-[#D4FF00] font-bold border-2 border-black dark:border-[#5A3A1A]"
             >
               Show All Categories
             </Button>
@@ -252,19 +254,19 @@ export const FlashcardViewer: React.FC<FlashcardViewerProps> = ({
       ) : viewMode === 'carousel' ? (
         <div className="space-y-4">
           {/* Progress Bar & Interaction Hint */}
-          <div className="max-w-2xl mx-auto flex items-center justify-between text-xs font-mono font-bold text-black px-2">
-            <div className="flex items-center gap-1.5 bg-black/10 px-2.5 py-1 rounded-full border border-black/20">
-              <MousePointer size={12} className="text-black" />
+          <div className="max-w-2xl mx-auto flex items-center justify-between text-xs font-mono font-bold text-black dark:text-[#F5EEE6] px-2">
+            <div className="flex items-center gap-1.5 bg-black/10 dark:bg-white/10 px-2.5 py-1 rounded-full border border-black/20 dark:border-white/20">
+              <MousePointer size={12} className="text-black dark:text-[#F5EEE6]" />
               <span className="text-[11px]">SCROLL WHEEL / SWIPE FLIPS CARDS</span>
             </div>
-            <div className="bg-black text-white px-2.5 py-0.5 rounded-full text-[11px]">
+            <div className="bg-black dark:bg-[#231A0F] text-white dark:text-[#F5EEE6] border border-transparent dark:border-[#5A3A1A] px-2.5 py-0.5 rounded-full text-[11px]">
               <span className="text-[#D4FF00]">{currentIndex + 1}</span> / {filteredCards.length}
             </div>
           </div>
 
-          <div className="max-w-2xl mx-auto h-1.5 bg-black/15 rounded-full overflow-hidden border border-black/20">
+          <div className="max-w-2xl mx-auto h-1.5 bg-black/15 dark:bg-white/15 rounded-full overflow-hidden border border-black/20 dark:border-white/20">
             <div
-              className="h-full bg-black transition-all duration-300 rounded-full"
+              className="h-full bg-black dark:bg-[#FA541C] transition-all duration-300 rounded-full"
               style={{ width: `${progressPercent}%` }}
             />
           </div>
@@ -274,7 +276,7 @@ export const FlashcardViewer: React.FC<FlashcardViewerProps> = ({
             ref={deckContainerRef}
             onTouchStart={handleTouchStart}
             onTouchEnd={handleTouchEnd}
-            className="focus:outline-none cursor-ns-resize"
+            className="max-w-2xl mx-auto w-full focus:outline-none cursor-ns-resize overscroll-contain"
             tabIndex={0}
             role="region"
             aria-label="Civic Flashcard Deck"
@@ -291,7 +293,7 @@ export const FlashcardViewer: React.FC<FlashcardViewerProps> = ({
               disabled={currentIndex === 0}
               icon={<ChevronLeft size={18} />}
               aria-label="Previous flashcard"
-              className="bg-white hover:bg-black hover:text-white border-2 border-black font-black shadow-[0_4px_0_0_#121212]"
+              className="bg-white dark:bg-[#231A0F] hover:bg-black dark:hover:bg-[#FA541C] text-black dark:text-[#F5EEE6] hover:text-white dark:hover:text-black border-2 border-black dark:border-[#5A3A1A] font-black shadow-[0_4px_0_0_#121212]"
             >
               Previous
             </Button>
@@ -304,8 +306,8 @@ export const FlashcardViewer: React.FC<FlashcardViewerProps> = ({
                   onClick={() => setCurrentIndex(idx)}
                   className={`h-2.5 rounded-full transition-all cursor-pointer ${
                     currentIndex === idx
-                      ? 'w-7 bg-black'
-                      : 'w-2.5 bg-black/25 hover:bg-black/50'
+                      ? 'w-7 bg-black dark:bg-[#FA541C]'
+                      : 'w-2.5 bg-black/25 dark:bg-white/25 hover:bg-black/50 dark:hover:bg-white/50'
                   }`}
                   aria-label={`Jump to card ${idx + 1}`}
                 />
@@ -320,7 +322,7 @@ export const FlashcardViewer: React.FC<FlashcardViewerProps> = ({
               icon={<ChevronRight size={18} />}
               iconPosition="right"
               aria-label="Next flashcard"
-              className="bg-white hover:bg-black hover:text-white border-2 border-black font-black shadow-[0_4px_0_0_#121212]"
+              className="bg-white dark:bg-[#231A0F] hover:bg-black dark:hover:bg-[#FA541C] text-black dark:text-[#F5EEE6] hover:text-white dark:hover:text-black border-2 border-black dark:border-[#5A3A1A] font-black shadow-[0_4px_0_0_#121212]"
             >
               Next
             </Button>

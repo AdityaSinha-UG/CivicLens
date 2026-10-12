@@ -3,6 +3,7 @@ export interface UserProfile {
   phoneNumber: string;
   locality: string;
   pinCode: string;
+  formattedAddress?: string;
   hasCompletedOnboarding: boolean;
   locationPermissionState: 'prompt' | 'granted' | 'denied' | 'unsupported';
   createdAt: string;

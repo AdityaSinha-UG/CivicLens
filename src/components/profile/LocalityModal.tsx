@@ -47,7 +47,7 @@ export const LocalityModal: React.FC<LocalityModalProps> = ({
     >
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
-          <label className="block text-xs font-black uppercase tracking-wider text-black mb-1.5">
+          <label className="block text-xs font-black uppercase tracking-wider text-black dark:text-[#F5EEE6] mb-1.5">
             Custom Locality / Ward
           </label>
           <div className="flex gap-2">
@@ -56,16 +56,16 @@ export const LocalityModal: React.FC<LocalityModalProps> = ({
               value={customLocality}
               onChange={(e) => setCustomLocality(e.target.value)}
               placeholder="e.g. Pune, Kothrud"
-              className="flex-1 px-3.5 py-2.5 rounded-2xl border-2 border-black bg-white text-sm font-bold text-black focus:outline-none focus:ring-2 focus:ring-black"
+              className="flex-1 px-3.5 py-2.5 rounded-2xl border-2 border-black dark:border-[#5A3A1A] bg-white dark:bg-[#2A1E10] text-sm font-bold text-black dark:text-[#F5EEE6] focus:outline-none focus:ring-2 focus:ring-black dark:focus:ring-[#FA541C]"
             />
-            <Button type="submit" variant="primary" size="sm" className="bg-black text-[#D4FF00] font-black uppercase">
+            <Button type="submit" variant="primary" size="sm" className="bg-black dark:bg-[#FA541C] text-[#D4FF00] dark:text-black font-black uppercase">
               Apply
             </Button>
           </div>
         </div>
 
         <div>
-          <span className="text-[10px] font-black text-black/70 uppercase tracking-widest block mb-2">
+          <span className="text-[10px] font-black text-black/70 dark:text-[#F5EEE6]/60 uppercase tracking-widest block mb-2">
             Suggested Neighbourhoods
           </span>
           <div className="grid grid-cols-2 gap-2">
@@ -81,8 +81,8 @@ export const LocalityModal: React.FC<LocalityModalProps> = ({
                   }}
                   className={`text-left px-3 py-2 rounded-xl text-xs font-bold border-2 transition-all flex items-center justify-between cursor-pointer ${
                     isSelected
-                      ? 'bg-black text-[#D4FF00] border-black shadow-[0_2px_0_0_#121212]'
-                      : 'bg-white text-black border-black/20 hover:border-black hover:bg-[#FFF2E8]'
+                      ? 'bg-black dark:bg-[#FA541C] text-[#D4FF00] dark:text-black border-black dark:border-[#FA541C] shadow-[0_2px_0_0_#121212]'
+                      : 'bg-white dark:bg-[#231A0F] text-black dark:text-[#F5EEE6] border-black/20 dark:border-[#5A3A1A] hover:border-black dark:hover:border-[#FA541C] hover:bg-[#FFF2E8] dark:hover:bg-[#2E1F0D]'
                   }`}
                 >
                   <span className="truncate">{loc}</span>

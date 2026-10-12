@@ -91,18 +91,18 @@ export const ProfileView: React.FC<ProfileViewProps> = ({
   return (
     <div className="max-w-3xl mx-auto space-y-6">
       {/* Editorial Title Banner */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b-2 border-black/15">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b-2 border-black/15 dark:border-[#5A3A1A]/50">
         <div>
           <div className="flex items-center gap-2">
-            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-black uppercase tracking-wider bg-black text-[#D4FF00]">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-black uppercase tracking-wider bg-black dark:bg-[#FA541C] text-[#D4FF00] dark:text-black">
               <ShieldCheck size={13} />
               <span>CITIZEN PROFILE</span>
             </span>
-            <span className="text-xs font-bold uppercase tracking-wider text-black/80">
+            <span className="text-xs font-bold uppercase tracking-wider text-black/80 dark:text-[#F5EEE6]/70">
               {profile.locality} Dispatch Pass
             </span>
           </div>
-          <h2 className="font-['Syne'] text-3xl sm:text-4xl font-black text-black tracking-tight mt-2">
+          <h2 className="font-['Syne'] text-3xl sm:text-4xl font-black text-black dark:text-[#F5EEE6] tracking-tight mt-2">
             Your Civic ID Pass
           </h2>
         </div>
@@ -118,7 +118,7 @@ export const ProfileView: React.FC<ProfileViewProps> = ({
                 setIsEditing(true);
               }}
               icon={<Edit3 size={15} />}
-              className="bg-white hover:bg-black hover:text-white font-black uppercase text-xs tracking-wider border-2 border-black shadow-[0_3px_0_0_#121212]"
+              className="bg-white dark:bg-[#231A0F] text-black dark:text-[#F5EEE6] hover:bg-black dark:hover:bg-[#FA541C] hover:text-white dark:hover:text-black font-black uppercase text-xs tracking-wider border-2 border-black dark:border-[#5A3A1A] shadow-[0_3px_0_0_#121212]"
             >
               Edit Details
             </Button>
@@ -127,7 +127,7 @@ export const ProfileView: React.FC<ProfileViewProps> = ({
               variant="ghost"
               size="sm"
               onClick={() => setIsEditing(false)}
-              className="text-black hover:bg-black/10 font-bold text-xs"
+              className="text-black dark:text-[#F5EEE6] hover:bg-black/10 dark:hover:bg-white/10 font-bold text-xs"
             >
               Cancel Edit
             </Button>
@@ -138,7 +138,7 @@ export const ProfileView: React.FC<ProfileViewProps> = ({
             size="sm"
             onClick={() => setIsSignOutModalOpen(true)}
             icon={<LogOut size={15} className="text-[#DC2626]" />}
-            className="bg-white hover:bg-[#DC2626] hover:text-white hover:border-[#DC2626] text-black font-black uppercase text-xs tracking-wider border-2 border-black shadow-[0_3px_0_0_#121212]"
+            className="bg-white dark:bg-[#231A0F] hover:bg-[#DC2626] dark:hover:bg-[#DC2626] hover:text-white hover:border-[#DC2626] text-black dark:text-[#F5EEE6] font-black uppercase text-xs tracking-wider border-2 border-black dark:border-[#5A3A1A] shadow-[0_3px_0_0_#121212]"
           >
             Sign Out
           </Button>
@@ -147,7 +147,7 @@ export const ProfileView: React.FC<ProfileViewProps> = ({
 
       {/* Success Banner when changes are saved */}
       {isSavedBanner && (
-        <div className="p-4 bg-white border-2 border-black rounded-3xl text-sm font-bold text-black flex items-center gap-3 shadow-[0_6px_0_0_#121212] animate-in fade-in slide-in-from-top-2">
+        <div className="p-4 bg-white dark:bg-[#231A0F] border-2 border-black dark:border-[#5A3A1A] rounded-3xl text-sm font-bold text-black dark:text-[#F5EEE6] flex items-center gap-3 shadow-[0_6px_0_0_#121212] animate-in fade-in slide-in-from-top-2">
           <div className="w-8 h-8 rounded-full bg-[#D4FF00] border border-black flex items-center justify-center shrink-0">
             <Check size={18} className="text-black" />
           </div>
@@ -158,9 +158,9 @@ export const ProfileView: React.FC<ProfileViewProps> = ({
       )}
 
       {/* HERO SECTION: The Beautiful Citizen Pass Identity Card */}
-      <div className="relative rounded-3xl overflow-hidden border-2 border-black bg-white shadow-[0_12px_0_0_#121212]">
+      <div className="relative rounded-3xl overflow-hidden border-2 border-black dark:border-[#5A3A1A] bg-white dark:bg-[#231A0F] shadow-[0_12px_0_0_#121212]">
         {/* Pass Top Banner */}
-        <div className="bg-black text-white p-6 sm:p-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-5 relative overflow-hidden">
+        <div className="bg-black dark:bg-[#18110A] text-white p-6 sm:p-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-5 relative overflow-hidden border-b-2 border-black dark:border-[#5A3A1A]">
           {/* Subtle Gen Z background watermark */}
           <div className="absolute right-[-20px] top-[-20px] font-['Syne'] text-8xl font-black text-white/5 pointer-events-none select-none">
             PASS
@@ -202,29 +202,29 @@ export const ProfileView: React.FC<ProfileViewProps> = ({
         </div>
 
         {/* Pass Details Grid: Shows Full Name, Number, and Locality */}
-        <div className="p-6 sm:p-8 bg-[#FFF8F4] space-y-6">
+        <div className="p-6 sm:p-8 bg-[#FFF8F4] dark:bg-[#1E1408] space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {/* Full Name Block */}
-            <div className="p-4 rounded-2xl bg-white border-2 border-black shadow-[0_4px_0_0_#121212]">
-              <span className="text-[10px] font-black uppercase tracking-wider text-black/60 block flex items-center gap-1.5 mb-1">
+            <div className="p-4 rounded-2xl bg-white dark:bg-[#231A0F] border-2 border-black dark:border-[#5A3A1A] shadow-[0_4px_0_0_#121212]">
+              <span className="text-[10px] font-black uppercase tracking-wider text-black/60 dark:text-[#F5EEE6]/50 block flex items-center gap-1.5 mb-1">
                 <User size={13} className="text-[#FA541C]" />
                 Full Legal / Citizen Name
               </span>
-              <span className="text-base font-extrabold text-black block truncate">
+              <span className="text-base font-extrabold text-black dark:text-[#F5EEE6] block truncate">
                 {profile.name || 'Not specified'}
               </span>
-              <span className="text-[11px] text-black/50 mt-1 block">
+              <span className="text-[11px] text-black/50 dark:text-[#F5EEE6]/40 mt-1 block">
                 Local display profile
               </span>
             </div>
 
             {/* Phone Number Block */}
-            <div className="p-4 rounded-2xl bg-white border-2 border-black shadow-[0_4px_0_0_#121212]">
-              <span className="text-[10px] font-black uppercase tracking-wider text-black/60 block flex items-center gap-1.5 mb-1">
+            <div className="p-4 rounded-2xl bg-white dark:bg-[#231A0F] border-2 border-black dark:border-[#5A3A1A] shadow-[0_4px_0_0_#121212]">
+              <span className="text-[10px] font-black uppercase tracking-wider text-black/60 dark:text-[#F5EEE6]/50 block flex items-center gap-1.5 mb-1">
                 <Phone size={13} className="text-[#FA541C]" />
                 Registered Contact Number
               </span>
-              <span className="text-base font-extrabold text-black block truncate font-mono">
+              <span className="text-base font-extrabold text-black dark:text-[#F5EEE6] block truncate font-mono">
                 {profile.phoneNumber || 'None provided'}
               </span>
               <span className="text-[11px] text-[#FA541C] font-bold mt-1 block">
@@ -233,34 +233,34 @@ export const ProfileView: React.FC<ProfileViewProps> = ({
             </div>
 
             {/* Locality & PIN Code Block */}
-            <div className="p-4 rounded-2xl bg-white border-2 border-black shadow-[0_4px_0_0_#121212]">
+            <div className="p-4 rounded-2xl bg-white dark:bg-[#231A0F] border-2 border-black dark:border-[#5A3A1A] shadow-[0_4px_0_0_#121212]">
               <div className="flex items-center justify-between mb-1">
-                <span className="text-[10px] font-black uppercase tracking-wider text-black/60 flex items-center gap-1.5">
+                <span className="text-[10px] font-black uppercase tracking-wider text-black/60 dark:text-[#F5EEE6]/50 flex items-center gap-1.5">
                   <MapPin size={13} className="text-[#FA541C]" />
                   Active Locality & PIN
                 </span>
                 {onOpenLocalityModal && (
                   <button
                     onClick={onOpenLocalityModal}
-                    className="text-[10px] font-black text-black hover:text-[#FA541C] underline uppercase cursor-pointer"
+                    className="text-[10px] font-black text-black dark:text-[#F5EEE6] hover:text-[#FA541C] dark:hover:text-[#FA541C] underline uppercase cursor-pointer"
                   >
                     Switch
                   </button>
                 )}
               </div>
-              <span className="text-base font-extrabold text-black block truncate">
+              <span className="text-base font-extrabold text-black dark:text-[#F5EEE6] block truncate">
                 {profile.locality} ({profile.pinCode || '411001'})
               </span>
-              <span className="text-[11px] text-black/50 mt-1 block">
-                Ward postal code
+              <span className="text-[11px] text-black/60 dark:text-[#F5EEE6]/50 mt-1 block truncate">
+                {profile.formattedAddress || 'Ward postal code'}
               </span>
             </div>
           </div>
 
           {/* Civic Subscriptions & Preferences Card */}
-          <div className="p-4 sm:p-5 rounded-2xl bg-white border-2 border-black shadow-[0_4px_0_0_#121212]">
+          <div className="p-4 sm:p-5 rounded-2xl bg-white dark:bg-[#231A0F] border-2 border-black dark:border-[#5A3A1A] shadow-[0_4px_0_0_#121212]">
             <div className="flex items-center justify-between mb-3">
-              <span className="text-xs font-black uppercase tracking-wider text-black flex items-center gap-1.5">
+              <span className="text-xs font-black uppercase tracking-wider text-black dark:text-[#F5EEE6] flex items-center gap-1.5">
                 <Sparkles size={14} className="text-[#FA541C]" />
                 Monitored Civic Streams for {profile.locality}
               </span>
@@ -269,7 +269,7 @@ export const ProfileView: React.FC<ProfileViewProps> = ({
               </span>
             </div>
 
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs font-bold text-black">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs font-bold text-black dark:text-[#F5EEE6]">
               {[
                 'Traffic & Metro',
                 'Water Supply',
@@ -279,7 +279,7 @@ export const ProfileView: React.FC<ProfileViewProps> = ({
                 'Public Safety',
                 'Community Park',
               ].map((channel, i) => (
-                <div key={i} className="flex items-center gap-1.5 p-2 rounded-xl bg-[#FFF2E8] border border-black/20">
+                <div key={i} className="flex items-center gap-1.5 p-2 rounded-xl bg-[#FFF2E8] dark:bg-[#2E1F0D] border border-black/20 dark:border-[#5A3A1A]">
                   <CheckCircle2 size={13} className="text-[#FA541C] shrink-0" />
                   <span className="truncate">{channel}</span>
                 </div>
@@ -291,19 +291,19 @@ export const ProfileView: React.FC<ProfileViewProps> = ({
 
       {/* EDIT PROFILE SECTION (Visible when user clicks 'Edit Details') */}
       {isEditing && (
-        <form onSubmit={handleSubmit} className="bg-white border-2 border-black rounded-3xl p-6 sm:p-8 shadow-[0_10px_0_0_#121212] space-y-5 animate-in fade-in slide-in-from-top-3">
-          <div className="flex items-center justify-between pb-3 border-b-2 border-black/10">
-            <h4 className="font-['Syne'] text-xl font-black text-black">
+        <form onSubmit={handleSubmit} className="bg-white dark:bg-[#231A0F] border-2 border-black dark:border-[#5A3A1A] rounded-3xl p-6 sm:p-8 shadow-[0_10px_0_0_#121212] space-y-5 animate-in fade-in slide-in-from-top-3">
+          <div className="flex items-center justify-between pb-3 border-b-2 border-black/10 dark:border-[#5A3A1A]/50">
+            <h4 className="font-['Syne'] text-xl font-black text-black dark:text-[#F5EEE6]">
               Update Citizen Information
             </h4>
-            <span className="text-xs text-black/60 font-semibold">
+            <span className="text-xs text-black/60 dark:text-[#F5EEE6]/50 font-semibold">
               Edits persist to local storage
             </span>
           </div>
 
           {/* Full Name */}
           <div>
-            <label className="block text-xs font-black uppercase tracking-wider text-black mb-1.5 flex items-center gap-1.5">
+            <label className="block text-xs font-black uppercase tracking-wider text-black dark:text-[#F5EEE6] mb-1.5 flex items-center gap-1.5">
               <User size={14} className="text-[#FA541C]" />
               <span>Full Name</span>
             </label>
@@ -313,13 +313,13 @@ export const ProfileView: React.FC<ProfileViewProps> = ({
               onChange={(e) => setFormData({ ...formData, name: e.target.value })}
               placeholder="e.g. Aditya Sharma"
               required
-              className="w-full px-4 py-3 rounded-2xl border-2 border-black bg-white text-sm font-bold text-black focus:outline-none focus:ring-2 focus:ring-black"
+              className="w-full px-4 py-3 rounded-2xl border-2 border-black dark:border-[#5A3A1A] bg-white dark:bg-[#2A1E10] text-sm font-bold text-black dark:text-[#F5EEE6] focus:outline-none focus:ring-2 focus:ring-black dark:focus:ring-[#FA541C]"
             />
           </div>
 
           {/* Phone Number */}
           <div>
-            <label className="block text-xs font-black uppercase tracking-wider text-black mb-1.5 flex items-center gap-1.5">
+            <label className="block text-xs font-black uppercase tracking-wider text-black dark:text-[#F5EEE6] mb-1.5 flex items-center gap-1.5">
               <Phone size={14} className="text-[#FA541C]" />
               <span>Contact Phone Number</span>
             </label>
@@ -328,9 +328,9 @@ export const ProfileView: React.FC<ProfileViewProps> = ({
               value={formData.phoneNumber}
               onChange={(e) => setFormData({ ...formData, phoneNumber: e.target.value })}
               placeholder="e.g. +91 98765 43210"
-              className="w-full px-4 py-3 rounded-2xl border-2 border-black bg-white text-sm font-bold text-black focus:outline-none focus:ring-2 focus:ring-black"
+              className="w-full px-4 py-3 rounded-2xl border-2 border-black dark:border-[#5A3A1A] bg-white dark:bg-[#2A1E10] text-sm font-bold text-black dark:text-[#F5EEE6] focus:outline-none focus:ring-2 focus:ring-black dark:focus:ring-[#FA541C]"
             />
-            <p className="text-[11px] text-black/60 font-medium mt-1">
+            <p className="text-[11px] text-black/60 dark:text-[#F5EEE6]/50 font-medium mt-1">
               Local demo field. Never transmitted to third-party marketing services.
             </p>
           </div>
@@ -338,7 +338,7 @@ export const ProfileView: React.FC<ProfileViewProps> = ({
           {/* Locality & PIN Code Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-black uppercase tracking-wider text-black mb-1.5 flex items-center gap-1.5">
+              <label className="block text-xs font-black uppercase tracking-wider text-black dark:text-[#F5EEE6] mb-1.5 flex items-center gap-1.5">
                 <MapPin size={14} className="text-[#FA541C]" />
                 <span>Locality / City</span>
               </label>
@@ -348,12 +348,12 @@ export const ProfileView: React.FC<ProfileViewProps> = ({
                 onChange={(e) => setFormData({ ...formData, locality: e.target.value })}
                 placeholder="e.g. Pune"
                 required
-                className="w-full px-4 py-3 rounded-2xl border-2 border-black bg-white text-sm font-bold text-black focus:outline-none focus:ring-2 focus:ring-black"
+                className="w-full px-4 py-3 rounded-2xl border-2 border-black dark:border-[#5A3A1A] bg-white dark:bg-[#2A1E10] text-sm font-bold text-black dark:text-[#F5EEE6] focus:outline-none focus:ring-2 focus:ring-black dark:focus:ring-[#FA541C]"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-black uppercase tracking-wider text-black mb-1.5 flex items-center gap-1.5">
+              <label className="block text-xs font-black uppercase tracking-wider text-black dark:text-[#F5EEE6] mb-1.5 flex items-center gap-1.5">
                 <Compass size={14} className="text-[#FA541C]" />
                 <span>Postal PIN Code</span>
               </label>
@@ -363,19 +363,19 @@ export const ProfileView: React.FC<ProfileViewProps> = ({
                 onChange={(e) => setFormData({ ...formData, pinCode: e.target.value })}
                 placeholder="e.g. 411001"
                 maxLength={6}
-                className="w-full px-4 py-3 rounded-2xl border-2 border-black bg-white text-sm font-bold text-black focus:outline-none focus:ring-2 focus:ring-black"
+                className="w-full px-4 py-3 rounded-2xl border-2 border-black dark:border-[#5A3A1A] bg-white dark:bg-[#2A1E10] text-sm font-bold text-black dark:text-[#F5EEE6] focus:outline-none focus:ring-2 focus:ring-black dark:focus:ring-[#FA541C]"
               />
             </div>
           </div>
 
           {/* One-time Device Location Helper */}
-          <div className="p-4 rounded-2xl bg-[#FFF2E8] border-2 border-black space-y-2">
+          <div className="p-4 rounded-2xl bg-[#FFF2E8] dark:bg-[#2E1F0D] border-2 border-black dark:border-[#5A3A1A] space-y-2">
             <div className="flex flex-wrap items-center justify-between gap-2">
               <div>
-                <span className="text-xs font-black uppercase text-black block">
+                <span className="text-xs font-black uppercase text-black dark:text-[#F5EEE6] block">
                   One-Time Device Geolocation
                 </span>
-                <span className="text-[11px] text-black/70 font-medium block">
+                <span className="text-[11px] text-black/70 dark:text-[#F5EEE6]/60 font-medium block">
                   Verify current neighbourhood coordinates without continuous background tracking.
                 </span>
               </div>
@@ -385,27 +385,27 @@ export const ProfileView: React.FC<ProfileViewProps> = ({
                 size="sm"
                 onClick={handleRequestLocation}
                 icon={<Compass size={14} />}
-                className="bg-white hover:bg-black hover:text-white font-black text-xs"
+                className="bg-white dark:bg-[#231A0F] text-black dark:text-[#F5EEE6] hover:bg-black dark:hover:bg-[#FA541C] hover:text-white dark:hover:text-black border-2 border-black dark:border-[#5A3A1A] font-black text-xs"
               >
                 Detect Location
               </Button>
             </div>
 
             {locatingStatus && (
-              <p className="text-xs text-black font-bold pt-1">
+              <p className="text-xs text-black dark:text-[#F5EEE6] font-bold pt-1">
                 {locatingStatus}
               </p>
             )}
           </div>
 
           {/* Form Actions */}
-          <div className="pt-3 border-t-2 border-black/10 flex flex-wrap items-center justify-between gap-3">
+          <div className="pt-3 border-t-2 border-black/10 dark:border-[#5A3A1A]/50 flex flex-wrap items-center justify-between gap-3">
             <div className="flex items-center gap-2">
               <Button
                 type="submit"
                 variant="primary"
                 icon={<Check size={16} />}
-                className="bg-black text-[#D4FF00] hover:bg-[#FA541C] hover:text-white font-black uppercase text-xs tracking-wider"
+                className="bg-black dark:bg-[#FA541C] text-[#D4FF00] dark:text-black hover:bg-[#FA541C] dark:hover:bg-[#D4FF00] hover:text-white font-black uppercase text-xs tracking-wider border-2 border-black dark:border-[#FA541C]"
               >
                 Save Changes
               </Button>
@@ -414,7 +414,7 @@ export const ProfileView: React.FC<ProfileViewProps> = ({
                 variant="ghost"
                 size="sm"
                 onClick={() => setIsEditing(false)}
-                className="text-black/70 font-bold"
+                className="text-black/70 dark:text-[#F5EEE6]/70 font-bold"
               >
                 Cancel
               </Button>
@@ -426,7 +426,7 @@ export const ProfileView: React.FC<ProfileViewProps> = ({
               size="sm"
               onClick={onResetProfile}
               icon={<RotateCcw size={14} />}
-              className="text-black/60 hover:text-black font-bold text-xs"
+              className="text-black/60 dark:text-[#F5EEE6]/50 hover:text-black dark:hover:text-[#F5EEE6] font-bold text-xs"
             >
               Reset to Defaults
             </Button>
@@ -435,12 +435,12 @@ export const ProfileView: React.FC<ProfileViewProps> = ({
       )}
 
       {/* Security & Authentication Disclaimer Card */}
-      <div className="p-4 bg-white border-2 border-black rounded-3xl text-xs text-black/80 flex items-start gap-3 shadow-[0_6px_0_0_#121212]">
-        <div className="p-2 rounded-xl bg-black text-[#D4FF00] shrink-0 mt-0.5">
+      <div className="p-4 bg-white dark:bg-[#231A0F] border-2 border-black dark:border-[#5A3A1A] rounded-3xl text-xs text-black/80 dark:text-[#F5EEE6]/70 flex items-start gap-3 shadow-[0_6px_0_0_#121212]">
+        <div className="p-2 rounded-xl bg-black dark:bg-[#FA541C] text-[#D4FF00] dark:text-black shrink-0 mt-0.5">
           <Lock size={16} />
         </div>
         <div className="leading-relaxed">
-          <strong className="text-black block mb-0.5 font-bold uppercase text-[11px] tracking-wider">
+          <strong className="text-black dark:text-[#F5EEE6] block mb-0.5 font-bold uppercase text-[11px] tracking-wider">
             Browser-Local Session Note
           </strong>
           This demo profile is kept in your device browser's local cache. Signing out resets stored credentials and lets you reconfigure a fresh profile.
@@ -456,20 +456,20 @@ export const ProfileView: React.FC<ProfileViewProps> = ({
         maxWidth="sm"
       >
         <div className="space-y-4">
-          <div className="flex items-start gap-3 p-3.5 bg-[#FEE2E2] border-2 border-black rounded-2xl text-xs text-black">
+          <div className="flex items-start gap-3 p-3.5 bg-[#FEE2E2] dark:bg-[#3D1414] border-2 border-black dark:border-[#5A3A1A] rounded-2xl text-xs text-black dark:text-[#FEE2E2]">
             <AlertTriangle size={20} className="text-[#DC2626] shrink-0 mt-0.5" />
             <p className="leading-snug font-medium">
               Are you sure you want to sign out? This will reset your local profile details on this browser and allow you to set up a new citizen profile.
             </p>
           </div>
 
-          <div className="flex items-center justify-end gap-2 pt-3 border-t-2 border-black/10">
+          <div className="flex items-center justify-end gap-2 pt-3 border-t-2 border-black/10 dark:border-[#5A3A1A]/50">
             <Button
               type="button"
               variant="ghost"
               size="sm"
               onClick={() => setIsSignOutModalOpen(false)}
-              className="font-bold text-xs"
+              className="font-bold text-xs text-black dark:text-[#F5EEE6]"
             >
               Stay Signed In
             </Button>

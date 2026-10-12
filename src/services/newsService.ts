@@ -1,4 +1,4 @@
-import { NewsArticle, NewsFilterOptions, NewsSearchResult, INewsProvider } from '../types/news';
+import type { NewsArticle, NewsFilterOptions, NewsSearchResult, INewsProvider } from '../types/news.ts';
 
 /**
  * MockNewsProvider
@@ -159,6 +159,8 @@ export class MockNewsProvider implements INewsProvider {
       lastUpdated: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
       queryExecuted: options.query || `Local civic updates (${options.locality})`,
       isDemoMode: true,
+      isConfigured: false,
+      statusMessage: 'Serving local demo articles.',
     };
   }
 
@@ -168,5 +170,61 @@ export class MockNewsProvider implements INewsProvider {
   }
 }
 
+/**
+ * CivicNewsProvider
+ * Connects to the local server /api/news endpoint (backed by SerpApi).
+ * Gracefully falls back to MockNewsProvider if server is unreachable,
+ * offline, or if the API key is not yet configured.
+ */
+export class CivicNewsProvider implements INewsProvider {
+  private fallbackProvider = new MockNewsProvider();
+  private articleCache = new Map<string, NewsArticle>();
+
+  async searchArticles(options: NewsFilterOptions): Promise<NewsSearchResult> {
+    const params = new URLSearchParams();
+    if (options.locality) params.set('locality', options.locality);
+    if (options.query) params.set('query', options.query);
+    if (options.category && options.category !== 'All') params.set('category', options.category);
+    if (options.refresh) params.set('refresh', 'true');
+
+    try {
+      const response = await fetch(`/api/news?${params.toString()}`);
+      if (!response.ok) {
+        console.warn(`[newsService] /api/news returned HTTP ${response.status}, using demo fallback.`);
+        const fallbackResult = await this.fallbackProvider.searchArticles(options);
+        return {
+          ...fallbackResult,
+          statusMessage: `Local server returned HTTP ${response.status}. Displaying demo civic dispatches.`,
+        };
+      }
+
+      const result: NewsSearchResult = await response.json();
+
+      // Cache articles in memory for fast getArticleById lookup
+      if (Array.isArray(result.articles)) {
+        for (const article of result.articles) {
+          this.articleCache.set(article.id, article);
+        }
+      }
+
+      return result;
+    } catch (err) {
+      console.warn('[newsService] Network error requesting /api/news, using demo fallback:', err);
+      const fallbackResult = await this.fallbackProvider.searchArticles(options);
+      return {
+        ...fallbackResult,
+        statusMessage: 'Offline or server unavailable. Displaying local demo civic dispatches.',
+      };
+    }
+  }
+
+  async getArticleById(id: string): Promise<NewsArticle | null> {
+    if (this.articleCache.has(id)) {
+      return this.articleCache.get(id) || null;
+    }
+    return this.fallbackProvider.getArticleById(id);
+  }
+}
+
 // Default exported singleton provider instance
-export const newsService = new MockNewsProvider();
+export const newsService = new CivicNewsProvider();
