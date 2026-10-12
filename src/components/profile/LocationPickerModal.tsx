@@ -381,7 +381,7 @@ export const LocationPickerModal: React.FC<LocationPickerModalProps> = ({
             </div>
 
             {/* ── Quick picks ───────────────────────────────────────────────── */}
-            <div className="grid grid-cols-4 gap-2">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
               {QUICK_PICKS.map((qp) => {
                 const isActive = qp.locality.toLowerCase() === currentLocality.toLowerCase();
                 return (

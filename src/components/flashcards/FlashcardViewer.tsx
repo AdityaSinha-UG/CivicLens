@@ -206,9 +206,9 @@ export const FlashcardViewer: React.FC<FlashcardViewerProps> = ({
       </div>
 
       {/* Category Filter Pills */}
-      <div className="flex items-center gap-2 overflow-x-auto pb-1 no-scrollbar">
-        <span className="text-[11px] font-black text-black dark:text-[#F5EEE6] uppercase tracking-wider shrink-0 flex items-center gap-1 mr-1">
-          <Tag size={13} />
+      <div className="flex items-center gap-1.5 sm:gap-2 overflow-x-auto pb-1.5 no-scrollbar -mx-1 px-1 touch-pan-x">
+        <span className="text-[10px] sm:text-[11px] font-black text-black dark:text-[#F5EEE6] uppercase tracking-wider shrink-0 flex items-center gap-1 mr-0.5">
+          <Tag size={12} />
           Filter:
         </span>
         {CATEGORIES.map((cat) => {
@@ -217,9 +217,9 @@ export const FlashcardViewer: React.FC<FlashcardViewerProps> = ({
             <button
               key={cat}
               onClick={() => setSelectedCategory(cat)}
-              className={`shrink-0 px-3.5 py-1.5 rounded-full text-xs font-black transition-all cursor-pointer border-2 border-black dark:border-[#5A3A1A] ${
+              className={`shrink-0 px-2.5 sm:px-3.5 py-1 sm:py-1.5 rounded-full text-[11px] sm:text-xs font-black transition-all cursor-pointer border-2 border-black dark:border-[#5A3A1A] whitespace-nowrap min-h-[34px] sm:min-h-[36px] flex items-center ${
                 isSelected
-                  ? 'bg-[#121212] dark:bg-[#FA541C] text-[#D4FF00] dark:text-black shadow-[0_3px_0_0_#121212]'
+                  ? 'bg-[#121212] dark:bg-[#FA541C] text-[#D4FF00] dark:text-black shadow-[0_2px_0_0_#121212]'
                   : 'bg-white dark:bg-[#231A0F] text-black dark:text-[#F5EEE6] hover:bg-[#D4FF00] dark:hover:bg-[#3A2410]'
               }`}
               aria-pressed={isSelected}
@@ -232,9 +232,9 @@ export const FlashcardViewer: React.FC<FlashcardViewerProps> = ({
 
       {/* Main Content Area */}
       {filteredCards.length === 0 ? (
-        <div className="bg-white dark:bg-[#231A0F] border-2 border-black dark:border-[#5A3A1A] rounded-3xl p-8 text-center my-6 max-w-md mx-auto shadow-[0_8px_0_0_#121212]">
+        <div className="bg-white dark:bg-[#231A0F] border-2 border-black dark:border-[#5A3A1A] rounded-3xl p-6 sm:p-8 text-center my-6 max-w-md mx-auto shadow-[0_8px_0_0_#121212]">
           <Info size={32} className="text-black dark:text-[#F5EEE6] mx-auto mb-2" />
-          <h4 className="font-['Syne'] font-extrabold text-lg text-black dark:text-[#F5EEE6]">
+          <h4 className="font-['Syne'] font-extrabold text-base sm:text-lg text-black dark:text-[#F5EEE6]">
             No flashcards in this category
           </h4>
           <p className="text-xs text-black/70 dark:text-[#F5EEE6]/70 mt-1">
@@ -252,14 +252,14 @@ export const FlashcardViewer: React.FC<FlashcardViewerProps> = ({
           </div>
         </div>
       ) : viewMode === 'carousel' ? (
-        <div className="space-y-4">
+        <div className="space-y-3 sm:space-y-4">
           {/* Progress Bar & Interaction Hint */}
-          <div className="max-w-2xl mx-auto flex items-center justify-between text-xs font-mono font-bold text-black dark:text-[#F5EEE6] px-2">
-            <div className="flex items-center gap-1.5 bg-black/10 dark:bg-white/10 px-2.5 py-1 rounded-full border border-black/20 dark:border-white/20">
-              <MousePointer size={12} className="text-black dark:text-[#F5EEE6]" />
-              <span className="text-[11px]">SCROLL WHEEL / SWIPE FLIPS CARDS</span>
+          <div className="max-w-2xl mx-auto flex items-center justify-between text-xs font-mono font-bold text-black dark:text-[#F5EEE6] px-1 sm:px-2">
+            <div className="flex items-center gap-1.5 bg-black/10 dark:bg-white/10 px-2 sm:px-2.5 py-1 rounded-full border border-black/20 dark:border-white/20">
+              <MousePointer size={11} className="text-black dark:text-[#F5EEE6]" />
+              <span className="text-[10px] sm:text-[11px] truncate">SWIPE / SCROLL FLIPS CARDS</span>
             </div>
-            <div className="bg-black dark:bg-[#231A0F] text-white dark:text-[#F5EEE6] border border-transparent dark:border-[#5A3A1A] px-2.5 py-0.5 rounded-full text-[11px]">
+            <div className="bg-black dark:bg-[#231A0F] text-white dark:text-[#F5EEE6] border border-transparent dark:border-[#5A3A1A] px-2 sm:px-2.5 py-0.5 rounded-full text-[10px] sm:text-[11px] shrink-0">
               <span className="text-[#D4FF00]">{currentIndex + 1}</span> / {filteredCards.length}
             </div>
           </div>
@@ -285,7 +285,7 @@ export const FlashcardViewer: React.FC<FlashcardViewerProps> = ({
           </div>
 
           {/* Navigation Controls Bar */}
-          <div className="flex items-center justify-between max-w-2xl mx-auto pt-2">
+          <div className="flex items-center justify-between gap-2.5 max-w-2xl mx-auto pt-1 sm:pt-2">
             <Button
               variant="outline"
               size="md"
@@ -293,7 +293,7 @@ export const FlashcardViewer: React.FC<FlashcardViewerProps> = ({
               disabled={currentIndex === 0}
               icon={<ChevronLeft size={18} />}
               aria-label="Previous flashcard"
-              className="bg-white dark:bg-[#231A0F] hover:bg-black dark:hover:bg-[#FA541C] text-black dark:text-[#F5EEE6] hover:text-white dark:hover:text-black border-2 border-black dark:border-[#5A3A1A] font-black shadow-[0_4px_0_0_#121212]"
+              className="flex-1 sm:flex-none justify-center bg-white dark:bg-[#231A0F] hover:bg-black dark:hover:bg-[#FA541C] text-black dark:text-[#F5EEE6] hover:text-white dark:hover:text-black border-2 border-black dark:border-[#5A3A1A] font-black shadow-[0_3px_0_0_#121212] py-2.5 min-h-[44px]"
             >
               Previous
             </Button>
@@ -322,7 +322,7 @@ export const FlashcardViewer: React.FC<FlashcardViewerProps> = ({
               icon={<ChevronRight size={18} />}
               iconPosition="right"
               aria-label="Next flashcard"
-              className="bg-white dark:bg-[#231A0F] hover:bg-black dark:hover:bg-[#FA541C] text-black dark:text-[#F5EEE6] hover:text-white dark:hover:text-black border-2 border-black dark:border-[#5A3A1A] font-black shadow-[0_4px_0_0_#121212]"
+              className="flex-1 sm:flex-none justify-center bg-white dark:bg-[#231A0F] hover:bg-black dark:hover:bg-[#FA541C] text-black dark:text-[#F5EEE6] hover:text-white dark:hover:text-black border-2 border-black dark:border-[#5A3A1A] font-black shadow-[0_3px_0_0_#121212] py-2.5 min-h-[44px]"
             >
               Next
             </Button>

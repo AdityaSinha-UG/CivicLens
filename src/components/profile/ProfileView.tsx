@@ -95,24 +95,24 @@ export const ProfileView: React.FC<ProfileViewProps> = ({
   return (
     <div className="max-w-3xl mx-auto space-y-6">
       {/* Editorial Title Banner */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b-2 border-black/15 dark:border-[#5A3A1A]/50">
-        <div>
-          <div className="flex items-center gap-2">
-            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-black uppercase tracking-wider bg-black dark:bg-[#FA541C] text-[#D4FF00] dark:text-black">
-              <ShieldCheck size={13} />
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 sm:pb-4 border-b-2 border-black/15 dark:border-[#5A3A1A]/50">
+        <div className="min-w-0">
+          <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap">
+            <span className="inline-flex items-center gap-1 sm:gap-1.5 px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full text-[10px] sm:text-[11px] font-black uppercase tracking-wider bg-black dark:bg-[#FA541C] text-[#D4FF00] dark:text-black">
+              <ShieldCheck size={12} />
               <span>CITIZEN PROFILE</span>
             </span>
-            <span className="text-xs font-bold uppercase tracking-wider text-black/80 dark:text-[#F5EEE6]/70">
+            <span className="text-[11px] sm:text-xs font-bold uppercase tracking-wider text-black/80 dark:text-[#F5EEE6]/70 truncate">
               {profile.locality} Dispatch Pass
             </span>
           </div>
-          <h2 className="font-['Syne'] text-3xl sm:text-4xl font-black text-black dark:text-[#F5EEE6] tracking-tight mt-2">
+          <h2 className="font-['Syne'] text-2xl sm:text-4xl font-black text-black dark:text-[#F5EEE6] tracking-tight mt-1.5 sm:mt-2">
             Your Civic ID Pass
           </h2>
         </div>
 
         {/* Action Toggle */}
-        <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2 w-full sm:w-auto">
           {!isEditing ? (
             <Button
               variant="outline"
@@ -121,8 +121,8 @@ export const ProfileView: React.FC<ProfileViewProps> = ({
                 setFormData(profile);
                 setIsEditing(true);
               }}
-              icon={<Edit3 size={15} />}
-              className="bg-white dark:bg-[#231A0F] text-black dark:text-[#F5EEE6] hover:bg-black dark:hover:bg-[#FA541C] hover:text-white dark:hover:text-black font-black uppercase text-xs tracking-wider border-2 border-black dark:border-[#5A3A1A] shadow-[0_3px_0_0_#121212]"
+              icon={<Edit3 size={14} />}
+              className="flex-1 sm:flex-none justify-center bg-white dark:bg-[#231A0F] text-black dark:text-[#F5EEE6] hover:bg-black dark:hover:bg-[#FA541C] hover:text-white dark:hover:text-black font-black uppercase text-[11px] sm:text-xs tracking-wider border-2 border-black dark:border-[#5A3A1A] shadow-[0_2px_0_0_#121212] py-2"
             >
               Edit Details
             </Button>
@@ -131,7 +131,7 @@ export const ProfileView: React.FC<ProfileViewProps> = ({
               variant="ghost"
               size="sm"
               onClick={() => setIsEditing(false)}
-              className="text-black dark:text-[#F5EEE6] hover:bg-black/10 dark:hover:bg-white/10 font-bold text-xs"
+              className="flex-1 sm:flex-none justify-center text-black dark:text-[#F5EEE6] hover:bg-black/10 dark:hover:bg-white/10 font-bold text-xs py-2"
             >
               Cancel Edit
             </Button>
@@ -141,8 +141,8 @@ export const ProfileView: React.FC<ProfileViewProps> = ({
             variant="outline"
             size="sm"
             onClick={() => setIsSignOutModalOpen(true)}
-            icon={<LogOut size={15} className="text-[#DC2626]" />}
-            className="bg-white dark:bg-[#231A0F] hover:bg-[#DC2626] dark:hover:bg-[#DC2626] hover:text-white hover:border-[#DC2626] text-black dark:text-[#F5EEE6] font-black uppercase text-xs tracking-wider border-2 border-black dark:border-[#5A3A1A] shadow-[0_3px_0_0_#121212]"
+            icon={<LogOut size={14} className="text-[#DC2626]" />}
+            className="flex-1 sm:flex-none justify-center bg-white dark:bg-[#231A0F] hover:bg-[#DC2626] dark:hover:bg-[#DC2626] hover:text-white hover:border-[#DC2626] text-black dark:text-[#F5EEE6] font-black uppercase text-[11px] sm:text-xs tracking-wider border-2 border-black dark:border-[#5A3A1A] shadow-[0_2px_0_0_#121212] py-2"
           >
             Sign Out
           </Button>
@@ -151,18 +151,18 @@ export const ProfileView: React.FC<ProfileViewProps> = ({
             variant="outline"
             size="sm"
             onClick={() => { setDeleteConfirmText(''); setIsDeleteModalOpen(true); }}
-            className="bg-white dark:bg-[#231A0F] hover:bg-[#7F1D1D] dark:hover:bg-[#7F1D1D] hover:text-white text-[#DC2626] dark:text-[#FCA5A5] font-black uppercase text-xs tracking-wider border-2 border-[#DC2626] dark:border-[#7F1D1D] shadow-[0_3px_0_0_#DC2626]"
+            className="flex-1 sm:flex-none justify-center bg-white dark:bg-[#231A0F] hover:bg-[#7F1D1D] dark:hover:bg-[#7F1D1D] hover:text-white text-[#DC2626] dark:text-[#FCA5A5] font-black uppercase text-[11px] sm:text-xs tracking-wider border-2 border-[#DC2626] dark:border-[#7F1D1D] shadow-[0_2px_0_0_#DC2626] py-2"
           >
-            Delete Account
+            Delete
           </Button>
         </div>
       </div>
 
       {/* Success Banner when changes are saved */}
       {isSavedBanner && (
-        <div className="p-4 bg-white dark:bg-[#231A0F] border-2 border-black dark:border-[#5A3A1A] rounded-3xl text-sm font-bold text-black dark:text-[#F5EEE6] flex items-center gap-3 shadow-[0_6px_0_0_#121212] animate-in fade-in slide-in-from-top-2">
-          <div className="w-8 h-8 rounded-full bg-[#D4FF00] border border-black flex items-center justify-center shrink-0">
-            <Check size={18} className="text-black" />
+        <div className="p-3.5 sm:p-4 bg-white dark:bg-[#231A0F] border-2 border-black dark:border-[#5A3A1A] rounded-2xl sm:rounded-3xl text-xs sm:text-sm font-bold text-black dark:text-[#F5EEE6] flex items-center gap-3 shadow-[0_4px_0_0_#121212] animate-in fade-in slide-in-from-top-2">
+          <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#D4FF00] border border-black flex items-center justify-center shrink-0">
+            <Check size={16} className="text-black" />
           </div>
           <p className="leading-snug">
             Your profile details and active locality have been saved successfully!
@@ -171,52 +171,52 @@ export const ProfileView: React.FC<ProfileViewProps> = ({
       )}
 
       {/* HERO SECTION: The Beautiful Citizen Pass Identity Card */}
-      <div className="relative rounded-3xl overflow-hidden border-2 border-black dark:border-[#5A3A1A] bg-white dark:bg-[#231A0F] shadow-[0_12px_0_0_#121212]">
+      <div className="relative rounded-2xl sm:rounded-3xl overflow-hidden border-2 border-black dark:border-[#5A3A1A] bg-white dark:bg-[#231A0F] shadow-[0_8px_0_0_#121212] sm:shadow-[0_12px_0_0_#121212]">
         {/* Pass Top Banner */}
-        <div className="bg-black dark:bg-[#18110A] text-white p-6 sm:p-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-5 relative overflow-hidden border-b-2 border-black dark:border-[#5A3A1A]">
+        <div className="bg-black dark:bg-[#18110A] text-white p-4 sm:p-6 md:p-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 sm:gap-5 relative overflow-hidden border-b-2 border-black dark:border-[#5A3A1A]">
           {/* Subtle Gen Z background watermark */}
-          <div className="absolute right-[-20px] top-[-20px] font-['Syne'] text-8xl font-black text-white/5 pointer-events-none select-none">
+          <div className="absolute right-[-20px] top-[-20px] font-['Syne'] text-7xl sm:text-8xl font-black text-white/5 pointer-events-none select-none">
             PASS
           </div>
 
-          <div className="flex items-center gap-4 z-10">
+          <div className="flex items-center gap-3 sm:gap-4 z-10 min-w-0">
             {/* Citizen Avatar with Initials */}
-            <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-[#FA541C] border-2 border-black text-white flex items-center justify-center font-['Syne'] text-2xl sm:text-3xl font-black shadow-[0_4px_0_0_#121212] shrink-0">
+            <div className="w-14 h-14 sm:w-20 sm:h-20 rounded-2xl bg-[#FA541C] border-2 border-black text-white flex items-center justify-center font-['Syne'] text-xl sm:text-3xl font-black shadow-[0_4px_0_0_#121212] shrink-0">
               {getInitials(profile.name)}
             </div>
 
-            <div>
-              <div className="flex items-center gap-2 flex-wrap">
-                <span className="px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider bg-[#D4FF00] text-black">
+            <div className="min-w-0">
+              <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap">
+                <span className="px-2 sm:px-2.5 py-0.5 rounded-full text-[9px] sm:text-[10px] font-black uppercase tracking-wider bg-[#D4FF00] text-black shrink-0">
                   VERIFIED CITIZEN
                 </span>
-                <span className="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold uppercase tracking-wider bg-white/10 text-white/80 border border-white/20">
+                <span className="px-2 sm:px-2.5 py-0.5 rounded-full text-[9px] sm:text-[10px] font-mono font-bold uppercase tracking-wider bg-white/10 text-white/80 border border-white/20 shrink-0">
                   ID: CL-2026-{profile.pinCode || '411001'}
                 </span>
               </div>
-              <h3 className="font-['Syne'] text-2xl sm:text-3xl font-black text-white mt-1 leading-tight">
+              <h3 className="font-['Syne'] text-xl sm:text-3xl font-black text-white mt-1 leading-tight truncate">
                 {profile.name || 'Local Citizen'}
               </h3>
-              <p className="text-xs text-white/70 font-medium mt-0.5 flex items-center gap-1.5">
-                <Radio size={12} className="text-[#D4FF00] animate-pulse" />
-                <span>Hyperlocal News Discovery Enabled</span>
+              <p className="text-[11px] sm:text-xs text-white/70 font-medium mt-0.5 flex items-center gap-1 sm:gap-1.5 truncate">
+                <Radio size={11} className="text-[#D4FF00] animate-pulse shrink-0" />
+                <span className="truncate">Hyperlocal News Discovery Enabled</span>
               </p>
             </div>
           </div>
 
-          <div className="z-10 flex sm:flex-col items-center sm:items-end gap-2 w-full sm:w-auto justify-between sm:justify-start border-t sm:border-t-0 border-white/15 pt-3 sm:pt-0">
+          <div className="z-10 flex sm:flex-col items-center sm:items-end gap-1.5 sm:gap-2 w-full sm:w-auto justify-between sm:justify-start border-t sm:border-t-0 border-white/15 pt-2.5 sm:pt-0">
             <span className="text-[10px] font-mono uppercase text-white/60 tracking-wider">
               MUNICIPAL WARD
             </span>
-            <span className="text-base sm:text-lg font-black text-[#D4FF00] font-['Syne']">
+            <span className="text-sm sm:text-lg font-black text-[#D4FF00] font-['Syne'] truncate">
               {profile.locality}
             </span>
           </div>
         </div>
 
         {/* Pass Details Grid: Shows Full Name, Number, and Locality */}
-        <div className="p-6 sm:p-8 bg-[#FFF8F4] dark:bg-[#1E1408] space-y-6">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="p-4 sm:p-6 md:p-8 bg-[#FFF8F4] dark:bg-[#1E1408] space-y-4 sm:space-y-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4">
             {/* Full Name Block */}
             <div className="p-4 rounded-2xl bg-white dark:bg-[#231A0F] border-2 border-black dark:border-[#5A3A1A] shadow-[0_4px_0_0_#121212]">
               <span className="text-[10px] font-black uppercase tracking-wider text-black/60 dark:text-[#F5EEE6]/50 block flex items-center gap-1.5 mb-1">

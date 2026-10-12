@@ -143,7 +143,7 @@ export const App: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#FA541C] dark:bg-[#1A1208] text-black dark:text-[#F5EEE6] flex flex-col md:flex-row font-sans selection:bg-black selection:text-[#D4FF00]">
+    <div className="min-h-screen bg-[#FA541C] dark:bg-[#1A1208] text-black dark:text-[#F5EEE6] flex flex-col md:flex-row font-sans selection:bg-black selection:text-[#D4FF00] overflow-x-hidden w-full max-w-full">
       {/* Desktop Sidebar Navigation */}
       <Sidebar
         currentTab={currentTab}
@@ -153,7 +153,7 @@ export const App: React.FC = () => {
       />
 
       {/* Main Content Area */}
-      <div className="flex-1 flex flex-col min-w-0 pb-20 md:pb-8">
+      <div className="flex-1 flex flex-col min-w-0 w-full overflow-x-hidden pb-24 md:pb-8">
         {/* Top Header */}
         <Header
           locality={profile.locality}
@@ -164,7 +164,7 @@ export const App: React.FC = () => {
         />
 
         {/* View Content */}
-        <main className="flex-1 px-4 sm:px-6 md:px-8 py-6 max-w-6xl w-full mx-auto">
+        <main className="flex-1 px-3 sm:px-6 md:px-8 py-4 sm:py-6 max-w-6xl w-full mx-auto">
           {currentTab === 'main' && (
             <MainNewsView
               locality={profile.locality}
